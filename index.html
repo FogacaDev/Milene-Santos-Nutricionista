@@ -17,7 +17,7 @@
         rel="stylesheet">
 
     <!-- html2pdf.js for PDF Generation -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
 
     <script>
         tailwind.config = {
@@ -254,6 +254,13 @@
             select {
                 border-bottom: 1px solid #e2e8f0 !important;
             }
+
+            @media print {
+                #pdf-content {
+                    width: 210mm;
+                }
+            }
+
         }
 
         /* Floating Button Moderno */
@@ -1386,93 +1393,382 @@
 
     <!-- Scripts -->
     <script>
-        // Dados para a Tabela de Frequência Alimentar
-        const alimentosFreq = [
-            "Arroz", "Macarrão", "Batata/Mandioca", "Pão de queijo", "Pão", "Farinhas",
-            "Hortaliças cruas", "Hortaliças cozidas", "Frutas", "Leite (tipo)",
-            "Queijo/iogurtes", "Carne vermelha", "Carne branca", "Embutidos",
-            "Enlatados", "Ovos", "Feijão", "Margarina/manteiga", "Requeijão",
-            "Maionese", "Frituras", "Açúcar/Adoçante", "Doces", "Bolacha recheada",
-            "Chocolate", "Refrigerante", "Refrigerante zero", "Suco (qual)",
-            "Sorvete", "Pizza", "Lanche", "Café", "Chá"
-        ];
 
-        // Populando a tabela dinamicamente com placeholders específicos
-        const tbody = document.getElementById('freq-body');
-        alimentosFreq.forEach((alimento, index) => {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td class="font-medium text-gray-700">${alimento}</td>
-                <td class="text-center"><input type="text" name="freq_${index}_diario" class="text-center bg-transparent w-full outline-none focus:bg-lilac-50 p-1 rounded" placeholder="Ex: 2x"></td>
-                <td class="text-center"><input type="text" name="freq_${index}_sem" class="text-center bg-transparent w-full outline-none focus:bg-lilac-50 p-1 rounded" placeholder="Ex: 3x"></td>
-                <td class="text-center"><input type="text" name="freq_${index}_mes" class="text-center bg-transparent w-full outline-none focus:bg-lilac-50 p-1 rounded" placeholder="Ex: 1x"></td>
+        document.addEventListener("DOMContentLoaded", () => {
+            const alimentos = [
+                "Macarrão", "Batata/Mandioca", "Pão de queijo", "Pão", "Farinhas",
+                "Hortaliças cruas", "Hortaliças cozidas", "Frutas", "Leite (tipo)",
+                "Queijo/iogurtes", "Carne vermelha", "Carne branca", "Embutidos",
+                "Enlatados", "Ovos", "Feijão", "Margarina/manteiga", "Requeijão",
+                "Maionese", "Frituras", "Açúcar/Adoçante", "Doces", "Bolacha recheada",
+                "Chocolate", "Refrigerante", "Refrigerante zero", "Suco (qual)",
+                "Sorvete", "Pizza", "Lanche", "Café", "Chá"
+            ];
+
+            const tbody = document.getElementById("freq-body");
+            if (tbody) {
+                alimentos.forEach((alim, i) => {
+                    const tr = document.createElement("tr");
+                    tr.innerHTML = `
+                <td class="py-2 text-lilac-900 font-medium">
+                    <input type="hidden" name="freq_alim_${i}" value="${alim}">
+                    ${alim}
+                </td>
+                <td class="text-center"><input type="text" name="freq_diario_${i}" class="text-center" placeholder="-"></td>
+                <td class="text-center"><input type="text" name="freq_sem_${i}" class="text-center" placeholder="-"></td>
+                <td class="text-center"><input type="text" name="freq_mes_${i}" class="text-center" placeholder="-"></td>
             `;
-            tbody.appendChild(tr);
+                    tbody.appendChild(tr);
+                });
+            }
         });
 
-        // Função para preparar os inputs antes de gerar o PDF
-        function prepareForPDF() {
-            const inputs = document.querySelectorAll('#anamnese-form input, #anamnese-form textarea, #anamnese-form select');
+        async function generatePDF() {
+            const { PDFDocument, StandardFonts, rgb } = PDFLib;
 
-            inputs.forEach(input => {
-                if (input.type === 'checkbox' || input.type === 'radio') {
-                    if (input.checked) {
-                        input.setAttribute('checked', 'checked');
-                    } else {
-                        input.removeAttribute('checked');
+            // Feedback visual de carregamento
+            const btn = document.querySelector('.btn-gerar');
+            const btnText = document.getElementById('btn-text');
+            if (btn) btn.disabled = true;
+            if (btnText) btnText.innerText = "Gerando PDF...";
+
+            try {
+                const pdfDoc = await PDFDocument.create();
+                let page = pdfDoc.addPage([595, 842]); // Tamanho A4 padrão
+                const fontRegular = await pdfDoc.embedFont(StandardFonts.Helvetica);
+                const fontBold = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
+
+                // Coordenadas e Margens
+                const marginX = 50;
+                const marginY = 50;
+                const maxWidth = 595 - (marginX * 2);
+                let y = 842 - marginY;
+
+                // ==========================================
+                // Funções Auxiliares de Desenho e Formatação
+                // ==========================================
+
+                // Verifica se precisa quebrar a página
+                function checkPageBreak(neededSpace = 20) {
+                    if (y < marginY + neededSpace) {
+                        page = pdfDoc.addPage([595, 842]);
+                        y = 842 - marginY;
                     }
-                } else if (input.tagName === 'TEXTAREA') {
-                    input.innerHTML = input.value;
-                } else {
-                    input.setAttribute('value', input.value);
                 }
-            });
-        }
 
-        // Função principal de geração do PDF
-        function generatePDF() {
-            const btns = document.querySelectorAll('.btn-gerar');
-            const element = document.getElementById('pdf-content');
+                // Escreve texto quebrando linhas automaticamente se for muito longo
+                function drawTextWrapped(text, font, size, color = rgb(0, 0, 0)) {
+                    if (!text) return;
+                    const words = text.toString().split(/[ \n]+/);
+                    let line = '';
 
-            btns.forEach(btn => {
-                btn.disabled = true;
-                btn.innerText = "Gerando PDF...";
-            });
+                    for (let i = 0; i < words.length; i++) {
+                        const testLine = line + words[i] + ' ';
+                        const testWidth = font.widthOfTextAtSize(testLine, size);
 
-            prepareForPDF();
-
-            const opt = {
-                margin: 10,
-                filename: 'Ficha_de_Anamnese_Milene_Santos.pdf',
-                image: { type: 'jpeg', quality: 0.95 },
-                html2canvas: {
-                    scale: 1, // 🔥 MUITO IMPORTANTE (era 2)
-                    useCORS: true
-                },
-                jsPDF: {
-                    unit: 'mm',
-                    format: 'a4',
-                    orientation: 'portrait'
-                },
-                pagebreak: {
-                    mode: ['css'] // 🔥 remove avoid-all
+                        if (testWidth > maxWidth && line.trim() !== '') {
+                            checkPageBreak(size + 5);
+                            page.drawText(line.trim(), { x: marginX, y, size, font, color });
+                            y -= (size + 5);
+                            line = words[i] + ' ';
+                        } else {
+                            line = testLine;
+                        }
+                    }
+                    if (line.trim() !== '') {
+                        checkPageBreak(size + 5);
+                        page.drawText(line.trim(), { x: marginX, y, size, font, color });
+                        y -= (size + 8);
+                    }
                 }
-            };
 
-            html2pdf()
-                .set(opt)
-                .from(element)
-                .save()
-                .then(() => {
-                    btns.forEach(btn => {
-                        btn.disabled = false;
-                        btn.innerText = "Gerar Documento PDF";
-                    });
-                })
-                .catch(err => {
-                    console.error(err);
-                    alert("Erro ao gerar PDF.");
+                // Desenha o Título de uma Seção
+                function printSection(title) {
+                    y -= 10;
+                    checkPageBreak(30);
+                    drawTextWrapped(title, fontBold, 14, rgb(0.43, 0.15, 0.85)); // Cor roxa combinando com seu tema
+                    y -= 5;
+                }
+
+                // Desenha Pergunta em uma linha e Resposta na linha de baixo
+                function printQ(question, answer) {
+                    if (!answer || answer === "Não informado" || answer === "") return;
+                    checkPageBreak(30);
+                    page.drawText(question + ":", { x: marginX, y, size: 10, font: fontBold, color: rgb(0, 0, 0) });
+                    y -= 12;
+                    drawTextWrapped(answer, fontRegular, 10, rgb(0.2, 0.2, 0.2));
+                }
+
+                // Desenha Pergunta e Resposta na mesma linha (se couber)
+                function printInline(question, answer) {
+                    if (!answer || answer === "Não informado" || answer === "") return;
+                    checkPageBreak(20);
+                    const qText = question + ": ";
+                    const qWidth = fontBold.widthOfTextAtSize(qText, 10);
+
+                    page.drawText(qText, { x: marginX, y, size: 10, font: fontBold, color: rgb(0, 0, 0) });
+
+                    const aText = answer.toString();
+                    if (qWidth + fontRegular.widthOfTextAtSize(aText, 10) > maxWidth) {
+                        y -= 12;
+                        drawTextWrapped(aText, fontRegular, 10, rgb(0.2, 0.2, 0.2));
+                    } else {
+                        page.drawText(aText, { x: marginX + qWidth, y, size: 10, font: fontRegular, color: rgb(0.2, 0.2, 0.2) });
+                        y -= 14;
+                    }
+                }
+
+                // ==========================================
+                // Extração de Dados do Formulário
+                // ==========================================
+                const form = document.getElementById("anamnese-form");
+                const data = new FormData(form);
+
+                // Função para pegar valor com fallback caso vazio
+                const getVal = (name) => {
+                    if (!data.has(name)) return "Não informado";
+                    const val = data.get(name);
+                    return (val && val.trim() !== "") ? val.trim() : "Não informado";
+                };
+
+                // Dicionário para traduzir a formatação dos options/radios
+                const formatOpt = (val) => {
+                    const map = {
+                        "sim": "Sim", "nao": "Não", "as_vezes": "Às vezes",
+                        "diario": "Diário", "ate_3": "Até 3 dias", "mais_3": "Mais de 3 dias",
+                        "normal": "Normal", "amolecidas": "Amolecidas", "duras": "Duras",
+                        "aumentada": "Aumentada", "reduzida": "Reduzida",
+                        "transparente": "Transparente", "claro": "Amarelo claro",
+                        "medio": "Amarelo médio", "escuro": "Amarelo escuro",
+                        "boa": "Boa", "regular": "Regular", "ruim": "Ruim",
+                        "rapido": "Rápido", "devagar": "Devagar"
+                    };
+                    return map[val] || (val !== "Não informado" ? val : "Não informado");
+                };
+                const getFmt = (name) => formatOpt(getVal(name));
+
+                // ==========================================
+                // Construção do Documento
+                // ==========================================
+
+                // CABEÇALHO
+                drawTextWrapped("FICHA DE ANAMNESE NUTRICIONAL", fontBold, 16, rgb(0.35, 0.13, 0.71));
+                y -= 2;
+                drawTextWrapped("Milene Santos - Nutricionista CRN 3 90107", fontRegular, 10, rgb(0.4, 0.4, 0.4));
+                y -= 15;
+
+                // 1. IDENTIFICAÇÃO PESSOAL
+                printSection("1. Identificação Pessoal");
+                printInline("Data da consulta", getVal("data_consulta"));
+                printInline("Nome completo", getVal("nome"));
+                printInline("Data de nascimento", getVal("data_nascimento"));
+                printInline("Idade", getVal("idade"));
+                printInline("Endereço", `${getVal("endereco")} - ${getVal("bairro")} - ${getVal("cidade")}`);
+                printInline("Telefone", getVal("telefone"));
+                printInline("Profissão", getVal("profissao"));
+                printInline("Email", getVal("email"));
+
+                let objetivos = [];
+                if (data.has("objetivo_emagrecer")) objetivos.push("Emagrecer");
+                if (data.has("objetivo_massa")) objetivos.push("Ganhar massa magra");
+                if (data.has("objetivo_doencas")) objetivos.push("Controlar doenças");
+                if (data.has("objetivo_bemestar")) objetivos.push("Melhorar bem-estar");
+                if (data.has("objetivo_aprender")) objetivos.push("Aprender a se alimentar melhor");
+                printQ("Objetivos da consulta", objetivos.length > 0 ? objetivos.join(", ") : "Não informado");
+
+                // 2. HISTÓRICO FAMILIAR E ROTINA
+                printSection("2. Histórico Familiar e Rotina Alimentar");
+                printInline("Estado civil", getVal("estado_civil"));
+                printInline("Composição familiar", getVal("composicao_familiar"));
+                printInline("Quem faz as compras", getVal("quem_compras"));
+                printInline("Frequência de compras", getVal("freq_compras"));
+                printInline("Quem prepara as refeições", getVal("quem_prepara"));
+                printInline("Refeições acompanhado(a) de", getVal("com_quem_refeicoes"));
+                printInline("Sal (mensal)", getVal("qtd_sal"));
+                printInline("Óleo (mensal)", getVal("qtd_oleo"));
+
+                const alcool = getFmt("alcool");
+                printQ("Bebidas alcoólicas", alcool === "Sim" ? `Sim - Tipo/Freq: ${getVal("alcool_tipo")}` : alcool);
+
+                const fumo = getFmt("fumo");
+                printQ("Tabagismo", fumo === "Sim" ? `Sim - Qtd: ${getVal("fumo_qtd")}` : fumo);
+
+                // 3. DADOS CLÍNICOS
+                printSection("3. Dados Clínicos e Saúde");
+                const sintomas = [
+                    { id: "digestao", label: "Digestão" }, { id: "nausea", label: "Náusea" },
+                    { id: "azia", label: "Azia" }, { id: "refluxo", label: "Refluxo" },
+                    { id: "diarreia", label: "Diarreia" }, { id: "obstipacao", label: "Obstipação" },
+                    { id: "distensao", label: "Distensão" }, { id: "flatulencia", label: "Flatulência" },
+                    { id: "estresse", label: "Estresse" }, { id: "ansiedade", label: "Ansiedade" },
+                    { id: "compulsao", label: "Compulsão" }, { id: "falta_apetite", label: "Falta de apetite" }
+                ];
+
+                sintomas.forEach(s => {
+                    const res = getFmt(`clin_${s.id}`);
+                    const obs = getVal(`obs_${s.id}`);
+                    if (res !== "Não informado" || obs !== "Não informado") {
+                        printInline(`Sintoma - ${s.label}`, `${res} ${obs !== "Não informado" ? `(Obs: ${obs})` : ""}`);
+                    }
                 });
+
+                printQ("Problemas (pele, cabelo, unha)", getVal("lesoes_pele"));
+
+                let diags = [];
+                if (data.has("diag_nenhuma")) diags.push("Nenhuma");
+                if (data.has("diag_hipertensao")) diags.push("Hipertensão");
+                if (data.has("diag_diabetes")) diags.push("Diabetes");
+                if (data.has("diag_dislipidemia")) diags.push("Dislipidemia");
+                if (data.has("diag_tireoide")) diags.push("Doença tireoidiana");
+                if (data.has("diag_gastrite")) diags.push("Gastrite/Refluxo");
+                if (data.has("diag_renal")) diags.push("Doença renal");
+                if (data.has("diag_alergias")) diags.push("Alergias");
+                if (getVal("diag_outras") !== "Não informado") diags.push(getVal("diag_outras"));
+                printQ("Diagnósticos médicos", diags.length > 0 ? diags.join(", ") : "Não informado");
+
+                const cirurgia = getFmt("cirurgia");
+                printInline("Procedimento cirúrgico", cirurgia === "Sim" ? `Sim - ${getVal("cirurgia_qual")} (${getVal("cirurgia_quando")})` : cirurgia);
+
+                const habIntestino = getVal("intestino_habito") === "outro" ? getVal("intestino_outro") : getFmt("intestino_habito");
+                printInline("Intestino", `Hábito: ${habIntestino} | Consistência: ${getFmt("intestino_consistencia")}`);
+                printInline("Urina", `Frequência: ${getFmt("urina_freq")} | Cor: ${getFmt("urina_cor")}`);
+                printInline("Sono", `${getVal("sono_horas")} horas/dia | Qualidade: ${getFmt("sono_qualidade")} | Acorda noite: ${getFmt("sono_acorda")}`);
+
+                // 4. EXAMES E MEDICAMENTOS
+                printSection("4. Exames, Medicamentos e Ciclo");
+                printQ("Exames Recentes", `Glicemia: ${getVal("exame_glicemia")} | Hemoglobina: ${getVal("exame_hemo")} | Colesterol: ${getVal("exame_colesterol")} | Triglicerídeos: ${getVal("exame_trigli")} | TSH/T4L: ${getVal("exame_tsh")} | Vitaminas: ${getVal("exame_vitaminas")} | Outros: ${getVal("exame_outros")}`);
+                printQ("Medicamentos em uso", getVal("medicamentos"));
+                printQ("Suplementos em uso", getVal("suplementos"));
+
+                printInline("Ciclo Menstrual Regular", `${getFmt("ciclo_regular")} | DUM: ${getVal("data_menstruacao")}`);
+                printInline("Anticoncepcional", getFmt("anticoncepcional") === "Sim" ? `Sim (${getVal("anticoncepcional_qual")})` : getFmt("anticoncepcional"));
+                printQ("TPM intensa", getVal("tpm"));
+
+                // 5. ATIVIDADE FÍSICA E COMPORTAMENTO
+                printSection("5. Atividade Física e Comportamento");
+                const ativFisica = getFmt("ativ_fisica");
+                if (ativFisica === "Sim") {
+                    printInline("Pratica exercício", `Sim - ${getVal("ativ_qual")} | Freq: ${getVal("ativ_freq")} | Duração: ${getVal("ativ_duracao")}`);
+                    printInline("Alimentação treino", `Estado: ${getVal("ativ_estado")} | Alimento associado: ${getVal("ativ_alimento")}`);
+                } else {
+                    printInline("Pratica exercício", ativFisica);
+                }
+
+                printInline("Belisca entre refeições", getFmt("comp_belisca"));
+                printInline("Come por emoção", getFmt("comp_emocao"));
+                printInline("Fome exagerada", getFmt("comp_fome_exag"));
+                printInline("Usa telas comendo", getFmt("comp_telas"));
+                printInline("Identifica saciedade", getFmt("comp_saciedade"));
+                printInline("Velocidade ao comer", getFmt("comp_velocidade"));
+                printInline("Horário de maior fome", getVal("comp_horario_fome"));
+
+                // 6. HISTÓRICO ALIMENTAR
+                printSection("6. Histórico Alimentar");
+                printInline("Intolerância alimentar", getFmt("hist_intolerancia") === "Sim" ? `Sim (${getVal("hist_intolerancia_qual")})` : getFmt("hist_intolerancia"));
+                printInline("Alergia alimentar", getFmt("hist_alergia") === "Sim" ? `Sim (${getVal("hist_alergia_qual")})` : getFmt("hist_alergia"));
+                printQ("Preferências alimentares", getVal("hist_preferencias"));
+                printInline("Já fez dieta antes", getFmt("hist_dietas"));
+                printInline("Início da mudança de peso", getVal("hist_mudanca_peso"));
+                printInline("Refeições ao dia", getVal("hist_num_refeicoes"));
+                printInline("Consumo de água", getVal("hist_agua"));
+                printQ("Adoçantes, açúcar ou mel", getVal("hist_adocantes"));
+
+                // 7. RECORDATÓRIO 24H
+                printSection("7. Recordatório 24 horas");
+                const refeicoes = [
+                    { id: "cafe", name: "Café da Manhã" }, { id: "lanchem", name: "Lanche da Manhã" },
+                    { id: "almoco", name: "Almoço" }, { id: "lanchet", name: "Lanche da Tarde" },
+                    { id: "jantar", name: "Jantar" }, { id: "ceia", name: "Ceia" }
+                ];
+
+                refeicoes.forEach(ref => {
+                    const hora = getVal(`rec_${ref.id}_hora`);
+                    const local = getVal(`rec_${ref.id}_local`);
+                    let alimentos = [];
+                    for (let i = 1; i <= 4; i++) {
+                        const alim = getVal(`rec_${ref.id}_alim${i}`);
+                        const qtd = getVal(`rec_${ref.id}_qtd${i}`);
+                        if (alim !== "Não informado") alimentos.push(`${alim} (${qtd !== "Não informado" ? qtd : "qtd não inf."})`);
+                    }
+                    if (hora !== "Não informado" || alimentos.length > 0) {
+                        printQ(`${ref.name} (Hora: ${hora} | Local: ${local})`, alimentos.length > 0 ? alimentos.join(" / ") : "Sem itens listados");
+                    }
+                });
+
+                // 8. FREQUÊNCIA ALIMENTAR
+                printSection("8. Frequência Alimentar");
+
+                // Loop para capturar a tabela principal de alimentos (32 itens)
+                for (let i = 0; i < 32; i++) {
+                    const alim = getVal(`freq_alim_${i}`);
+                    const diario = getVal(`freq_diario_${i}`);
+                    const sem = getVal(`freq_sem_${i}`);
+                    const mes = getVal(`freq_mes_${i}`);
+
+                    // Só imprime na ficha final se o paciente preencheu pelo menos um dos campos
+                    if (diario !== "Não informado" || sem !== "Não informado" || mes !== "Não informado") {
+                        let text = [];
+                        if (diario !== "Não informado") text.push(`Diário: ${diario}`);
+                        if (sem !== "Não informado") text.push(`Semanal: ${sem}`);
+                        if (mes !== "Não informado") text.push(`Mensal: ${mes}`);
+                        printInline(`- ${alim}`, text.join(" | "));
+                    }
+                }
+
+                // Captura os alimentos adicionais
+                printSection("Frequência Alimentar (Adicionais)");
+                for (let i = 1; i <= 2; i++) {
+                    const alim = getVal(`freq_extra_alim${i}`);
+                    if (alim !== "Não informado") {
+                        printInline(`- ${alim}`, `Diário: ${getVal(`freq_extra_diario${i}`)} | Semanal: ${getVal(`freq_extra_sem${i}`)} | Mensal: ${getVal(`freq_extra_mes${i}`)}`);
+                    }
+                }
+                // 9. DADOS ANTROPOMÉTRICOS
+                printSection("9. Dados Antropométricos");
+                printInline("Peso Atual / Altura / IMC", `${getVal("ant_peso")} kg / ${getVal("ant_altura")} m / ${getVal("ant_imc")}`);
+                printQ("Circunferências (cm)", `Cintura: ${getVal("circ_cintura")} | Quadril: ${getVal("circ_quadril")} | Abdominal: ${getVal("circ_abdominal")} | Tórax: ${getVal("circ_torax")} | Braço: ${getVal("circ_braco")} | Braço Contr: ${getVal("circ_braco_contr")} | Panturrilha: ${getVal("circ_panturrilha")}`);
+                printQ("Dobras Cutâneas (mm)", `Tríceps: ${getVal("dobra_triceps")} | Bíceps: ${getVal("dobra_biceps")} | Subescapular: ${getVal("dobra_subescapular")} | Peitoral: ${getVal("dobra_peitoral")} | Axilar: ${getVal("dobra_axilar")} | Supra: ${getVal("dobra_supra")} | Abdominal: ${getVal("dobra_abdominal")} | Coxa: ${getVal("dobra_coxa")} | Panturrilha: ${getVal("dobra_panturrilha")}`);
+
+                // 10. INFORMAÇÕES ADICIONAIS
+                printSection("10. Informações Adicionais");
+                printQ("Observações finais", getVal("info_adicional"));
+
+                // ==========================================
+                // ASSINATURAS E FINALIZAÇÃO
+                // ==========================================
+                y -= 40;
+                checkPageBreak(100); // Garante espaço para assinaturas
+
+                const today = new Date().toLocaleDateString('pt-BR');
+                page.drawText(`Data de preenchimento: ${today}`, { x: marginX, y, size: 10, font: fontRegular, color: rgb(0, 0, 0) });
+                y -= 50;
+
+                // Assinatura Paciente
+                page.drawLine({ start: { x: marginX, y }, end: { x: marginX + 220, y }, thickness: 1, color: rgb(0, 0, 0) });
+                page.drawText("Assinatura do(a) Paciente", { x: marginX + 45, y: y - 15, size: 10, font: fontRegular, color: rgb(0, 0, 0) });
+
+                // Assinatura Nutri
+                const nutriX = 595 - marginX - 220;
+                page.drawLine({ start: { x: nutriX, y }, end: { x: nutriX + 220, y }, thickness: 1, color: rgb(0, 0, 0) });
+                page.drawText("Milene Santos - Nutricionista", { x: nutriX + 35, y: y - 15, size: 10, font: fontBold, color: rgb(0, 0, 0) });
+                // Salva e faz o Download
+                const pdfBytes = await pdfDoc.save();
+                const blob = new Blob([pdfBytes], { type: "application/pdf" });
+                const url = URL.createObjectURL(blob);
+
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = "Ficha_Anamnese_MileneSantos.pdf";
+                a.click();
+                URL.revokeObjectURL(url); // Limpa memória do navegador
+
+            } catch (error) {
+                console.error("Erro ao gerar o PDF:", error);
+                alert("Ocorreu um erro ao gerar o documento. Verifique o console.");
+            } finally {
+                if (btn) btn.disabled = false;
+                if (btnText) btnText.innerText = "Baixar Ficha em PDF";
+            }
         }
     </script>
 </body>
