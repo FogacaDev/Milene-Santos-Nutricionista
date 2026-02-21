@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html lang="pt-PT">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ficha de Anamnese Nutricional - Milene Santos</title>
-    
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
     <!-- html2pdf.js for PDF Generation -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
@@ -57,15 +60,24 @@
 
     <style>
         body {
-            background-color: #fdfcff; /* Fundo ainda mais suave e quente */
+            background-color: #fdfcff;
+            /* Fundo ainda mais suave e quente */
             color: #334155;
         }
 
         /* Estilização dos inputs para ficarem delicados */
-        input[type="text"], input[type="email"], input[type="tel"], input[type="date"], input[type="number"], input[type="time"], textarea, select {
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="date"],
+        input[type="number"],
+        input[type="time"],
+        textarea,
+        select {
             width: 100%;
             border: none;
-            border-bottom: 1px dashed #c4b5fd; /* lilac-300 - Dashed for softer look */
+            border-bottom: 1px dashed #c4b5fd;
+            /* lilac-300 - Dashed for softer look */
             background-color: transparent;
             padding: 0.5rem 0.25rem;
             font-family: 'Montserrat', sans-serif;
@@ -74,37 +86,52 @@
             transition: all 0.3s ease;
         }
 
-        input::placeholder, textarea::placeholder {
-            color: #a78bfa; /* lilac-400 */
+        input::placeholder,
+        textarea::placeholder {
+            color: #a78bfa;
+            /* lilac-400 */
             opacity: 0.6;
             font-style: italic;
             font-size: 0.8rem;
         }
 
-        input[type="text"]:focus, input[type="email"]:focus, input[type="tel"]:focus, input[type="date"]:focus, input[type="number"]:focus, input[type="time"]:focus, textarea:focus, select:focus {
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="tel"]:focus,
+        input[type="date"]:focus,
+        input[type="number"]:focus,
+        input[type="time"]:focus,
+        textarea:focus,
+        select:focus {
             outline: none;
-            border-bottom: 2px solid #8b5cf6; /* lilac-500 */
+            border-bottom: 2px solid #8b5cf6;
+            /* lilac-500 */
             background-color: #f5f3ff;
             border-radius: 4px 4px 0 0;
             box-shadow: none;
         }
 
         /* Checkboxes e Radios delicados */
-        input[type="checkbox"], input[type="radio"] {
-            accent-color: #8b5cf6; /* lilac-500 */
+        input[type="checkbox"],
+        input[type="radio"] {
+            accent-color: #8b5cf6;
+            /* lilac-500 */
             width: 1.1rem;
             height: 1.1rem;
             cursor: pointer;
             transition: transform 0.2s ease;
         }
-        input[type="checkbox"]:hover, input[type="radio"]:hover {
+
+        input[type="checkbox"]:hover,
+        input[type="radio"]:hover {
             transform: scale(1.1);
         }
 
         /* Labels */
         label {
             font-weight: 500;
-            color: #4c1d95; /* lilac-900 */
+            color: #4c1d95;
+            /* lilac-900 */
             font-size: 0.875rem;
             display: inline-flex;
             align-items: center;
@@ -121,6 +148,7 @@
             margin-top: 2.5rem;
             position: relative;
         }
+
         .section-title::after {
             content: '';
             position: absolute;
@@ -128,14 +156,16 @@
             left: 0;
             width: 50px;
             height: 2px;
-            background-color: #8b5cf6; /* lilas forte */
+            background-color: #8b5cf6;
+            /* lilas forte */
         }
 
         /* Helper texts */
         .helper-text {
             display: block;
             font-size: 0.75rem;
-            color: #8b5cf6; /* lilac-500 */
+            color: #8b5cf6;
+            /* lilac-500 */
             font-style: italic;
             margin-top: 0.2rem;
             opacity: 0.8;
@@ -153,24 +183,29 @@
             border-radius: 8px;
             overflow: hidden;
         }
+
         th {
-            background-color: #f5f3ff; /* lilac-50 */
+            background-color: #f5f3ff;
+            /* lilac-50 */
             color: #5b21b6;
             font-weight: 600;
             text-align: left;
             padding: 0.85rem;
             border-bottom: 1px solid #ddd6fe;
         }
+
         td {
             padding: 0.6rem 0.75rem;
             border-bottom: 1px dashed #ede9fe;
             vertical-align: middle;
         }
+
         tr:last-child td {
             border-bottom: none;
         }
+
         tr:hover td {
-            background-color: #faf5ff; 
+            background-color: #faf5ff;
         }
 
         /* Prevenir quebras de página ruins no PDF */
@@ -184,18 +219,41 @@
             padding: 3rem 4rem;
             box-shadow: 0 20px 40px -10px rgba(139, 92, 246, 0.08);
             max-width: 950px;
-            margin: 2rem auto 8rem auto; /* Extra margin bottom para o botão */
+            margin: 2rem auto 8rem auto;
+            /* Extra margin bottom para o botão */
             border-radius: 12px;
             border: 1px solid #f5f3ff;
         }
 
         @media print {
-            body { background: white; }
-            #pdf-content { box-shadow: none; padding: 0; margin: 0; max-width: 100%; border: none; }
+            body {
+                background: white;
+            }
+
+            #pdf-content {
+                box-shadow: none;
+                padding: 0;
+                margin: 0;
+                max-width: 100%;
+                border: none;
+            }
+
             /* Esconde textos de ajuda no PDF final para ficar limpo */
-            .no-print, .helper-text { display: none !important; }
-            input::placeholder, textarea::placeholder { color: transparent !important; }
-            input, textarea, select { border-bottom: 1px solid #e2e8f0 !important; }
+            .no-print,
+            .helper-text {
+                display: none !important;
+            }
+
+            input::placeholder,
+            textarea::placeholder {
+                color: transparent !important;
+            }
+
+            input,
+            textarea,
+            select {
+                border-bottom: 1px solid #e2e8f0 !important;
+            }
         }
 
         /* Floating Button Moderno */
@@ -204,10 +262,12 @@
             box-shadow: 0 10px 25px -5px rgba(139, 92, 246, 0.5);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
+
         .btn-gerar:hover {
             transform: translateY(-3px) scale(1.02);
             box-shadow: 0 20px 30px -5px rgba(139, 92, 246, 0.6);
         }
+
         .floating-container {
             position: fixed;
             bottom: 2rem;
@@ -220,56 +280,73 @@
         }
     </style>
 </head>
+
 <body class="antialiased font-sans">
 
     <!-- Container do Botão Flutuante Intuitivo -->
     <div class="no-print floating-container">
-        <div class="bg-white px-4 py-2 rounded-lg shadow-md border border-lilac-100 text-sm text-lilac-800 font-medium animate-pulse-slow">
+        <div
+            class="bg-white px-4 py-2 rounded-lg shadow-md border border-lilac-100 text-sm text-lilac-800 font-medium animate-pulse-slow">
             ✨ Já preencheu tudo?
         </div>
-        <button onclick="generatePDF()" class="btn-gerar text-white font-semibold py-4 px-8 rounded-full flex items-center gap-3 text-lg border-2 border-white">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 18 15 15"/></svg>
+        <button onclick="generatePDF()"
+            class="btn-gerar text-white font-semibold py-4 px-8 rounded-full flex items-center gap-3 text-lg border-2 border-white">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                <polyline points="14 2 14 8 20 8" />
+                <line x1="12" y1="18" x2="12" y2="12" />
+                <polyline points="9 15 12 18 15 15" />
+            </svg>
             <span id="btn-text">Baixar Ficha em PDF</span>
         </button>
     </div>
 
     <div id="pdf-content">
-        
+
         <!-- HEADER / LOGO -->
         <div class="flex flex-col items-center justify-center mb-10 avoid-page-break">
             <div class="flex items-center gap-4">
                 <!-- Ícone Maçã Delicada SVG -->
                 <svg width="65" height="65" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 2C12 2 11.5 5 9 6" stroke="#8b5cf6" stroke-width="1.2" stroke-linecap="round"/>
-                    <path d="M14 3.5C14 3.5 16 3 17 5C17 5 16.5 7.5 14 7C14 7 13.5 4.5 14 3.5Z" fill="#ede9fe" stroke="#8b5cf6" stroke-width="1.2"/>
-                    <path d="M16 8C19.5 8 22 10.5 22 14.5C22 18.5 19 22 15 22C13.5 22 12 21 12 21C12 21 10.5 22 9 22C5 22 2 18.5 2 14.5C2 10.5 4.5 8 8 8C9.5 8 10.5 8.5 11 9C11.5 8.5 13 8 16 8Z" fill="#fdfcff" stroke="#8b5cf6" stroke-width="1.2"/>
+                    <path d="M12 2C12 2 11.5 5 9 6" stroke="#8b5cf6" stroke-width="1.2" stroke-linecap="round" />
+                    <path d="M14 3.5C14 3.5 16 3 17 5C17 5 16.5 7.5 14 7C14 7 13.5 4.5 14 3.5Z" fill="#ede9fe"
+                        stroke="#8b5cf6" stroke-width="1.2" />
+                    <path
+                        d="M16 8C19.5 8 22 10.5 22 14.5C22 18.5 19 22 15 22C13.5 22 12 21 12 21C12 21 10.5 22 9 22C5 22 2 18.5 2 14.5C2 10.5 4.5 8 8 8C9.5 8 10.5 8.5 11 9C11.5 8.5 13 8 16 8Z"
+                        fill="#fdfcff" stroke="#8b5cf6" stroke-width="1.2" />
                 </svg>
-                
+
                 <div class="text-center">
-                    <h1 class="font-signature text-5xl text-lilac-800 tracking-wide" style="font-family: 'Dancing Script', cursive; font-style: italic;">Milene Santos</h1>
-                    <p class="font-sans text-xs tracking-[0.25em] text-lilac-400 font-semibold uppercase mt-2">Nutricionista CRN 3 90107</p>
+                    <h1 class="font-signature text-5xl text-lilac-800 tracking-wide"
+                        style="font-family: 'Dancing Script', cursive; font-style: italic;">Milene Santos</h1>
+                    <p class="font-sans text-xs tracking-[0.25em] text-lilac-400 font-semibold uppercase mt-2">
+                        Nutricionista CRN 3 90107</p>
                 </div>
             </div>
-            
-            <div class="mt-10 bg-gradient-to-r from-lilac-50 via-softblue-50 to-lilac-50 w-full py-4 rounded-xl border border-lilac-100 shadow-sm relative overflow-hidden">
+
+            <div
+                class="mt-10 bg-gradient-to-r from-lilac-50 via-softblue-50 to-lilac-50 w-full py-4 rounded-xl border border-lilac-100 shadow-sm relative overflow-hidden">
                 <div class="absolute top-0 left-0 w-1 h-full bg-lilac-400"></div>
-                <h2 class="text-center text-2xl font-serif text-lilac-900 uppercase tracking-widest">Ficha de Anamnese</h2>
-                <p class="text-center text-xs text-lilac-500 mt-1 no-print">Por favor, preencha os dados com a maior precisão possível.</p>
+                <h2 class="text-center text-2xl font-serif text-lilac-900 uppercase tracking-widest">Ficha de Anamnese
+                </h2>
+                <p class="text-center text-xs text-lilac-500 mt-1 no-print">Por favor, preencha os dados com a maior
+                    precisão possível.</p>
             </div>
         </div>
 
         <form id="anamnese-form" autocomplete="off">
-            
+
             <!-- SEC 1: IDENTIFICAÇÃO PESSOAL -->
             <div class="avoid-page-break">
                 <h3 class="section-title">Identificação Pessoal</h3>
-                
+
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 mb-4">
                     <div class="md:col-span-2">
                         <label>Data da primeira consulta:</label>
                         <input type="date" name="data_consulta">
                     </div>
-                    
+
                     <div class="md:col-span-2">
                         <label>Nome completo:</label>
                         <input type="text" name="nome" placeholder="Digite seu nome completo">
@@ -314,14 +391,20 @@
                 </div>
 
                 <div class="mt-6 p-5 bg-lilac-50 rounded-xl border border-lilac-100 shadow-sm">
-                    <label class="block mb-3 text-lilac-900 font-semibold text-lg font-serif">Motivo da consulta, qual objetivo:</label>
+                    <label class="block mb-3 text-lilac-900 font-semibold text-lg font-serif">Motivo da consulta, qual
+                        objetivo:</label>
                     <span class="helper-text mb-4">Pode marcar mais de uma opção se desejar.</span>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <label class="hover:text-lilac-600 transition-colors"><input type="checkbox" name="objetivo_emagrecer"> Emagrecer</label>
-                        <label class="hover:text-lilac-600 transition-colors"><input type="checkbox" name="objetivo_massa"> Ganhar massa magra</label>
-                        <label class="hover:text-lilac-600 transition-colors"><input type="checkbox" name="objetivo_doencas"> Controlar doenças</label>
-                        <label class="hover:text-lilac-600 transition-colors"><input type="checkbox" name="objetivo_bemestar"> Melhorar bem-estar</label>
-                        <label class="hover:text-lilac-600 transition-colors"><input type="checkbox" name="objetivo_aprender"> Aprender a se alimentar melhor</label>
+                        <label class="hover:text-lilac-600 transition-colors"><input type="checkbox"
+                                name="objetivo_emagrecer"> Emagrecer</label>
+                        <label class="hover:text-lilac-600 transition-colors"><input type="checkbox"
+                                name="objetivo_massa"> Ganhar massa magra</label>
+                        <label class="hover:text-lilac-600 transition-colors"><input type="checkbox"
+                                name="objetivo_doencas"> Controlar doenças</label>
+                        <label class="hover:text-lilac-600 transition-colors"><input type="checkbox"
+                                name="objetivo_bemestar"> Melhorar bem-estar</label>
+                        <label class="hover:text-lilac-600 transition-colors"><input type="checkbox"
+                                name="objetivo_aprender"> Aprender a se alimentar melhor</label>
                     </div>
                 </div>
             </div>
@@ -329,7 +412,7 @@
             <!-- SEC 2: HISTÓRICO FAMILIAR E ROTINA -->
             <div class="avoid-page-break mt-10">
                 <h3 class="section-title">Histórico Familiar e Rotina Alimentar</h3>
-                
+
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
                     <div>
                         <label>Estado civil:</label>
@@ -339,7 +422,7 @@
                         <label>Composição familiar:</label>
                         <input type="text" name="composicao_familiar" placeholder="Ex: Moro com marido e 2 filhos">
                     </div>
-                    
+
                     <div>
                         <label>Quem realiza as compras da casa:</label>
                         <input type="text" name="quem_compras" placeholder="Ex: Eu mesma, Meu esposo...">
@@ -368,14 +451,17 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 p-5 border border-softblue-200 rounded-xl bg-gradient-to-br from-softblue-50 to-white shadow-sm">
+                <div
+                    class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 p-5 border border-softblue-200 rounded-xl bg-gradient-to-br from-softblue-50 to-white shadow-sm">
                     <div>
-                        <label class="block mb-2 font-serif text-lg text-softblue-900">Faz uso de bebidas alcoólicas?</label>
+                        <label class="block mb-2 font-serif text-lg text-softblue-900">Faz uso de bebidas
+                            alcoólicas?</label>
                         <div class="flex gap-6 mb-3">
                             <label><input type="radio" name="alcool" value="sim"> Sim</label>
                             <label><input type="radio" name="alcool" value="nao"> Não</label>
                         </div>
-                        <input type="text" name="alcool_tipo" placeholder="Se sim, qual tipo e frequência? (Ex: Vinho, 2x semana)">
+                        <input type="text" name="alcool_tipo"
+                            placeholder="Se sim, qual tipo e frequência? (Ex: Vinho, 2x semana)">
                     </div>
                     <div>
                         <label class="block mb-2 font-serif text-lg text-softblue-900">Fuma ou já fumou?</label>
@@ -391,8 +477,9 @@
             <!-- SEC 3: DADOS CLÍNICOS E SAÚDE -->
             <div class="mt-10">
                 <h3 class="section-title">Dados Clínicos e Saúde</h3>
-                <span class="helper-text mb-3">Assinale a frequência de cada sintoma e, se desejar, adicione detalhes na coluna de observação (ex: "Sempre após o almoço").</span>
-                
+                <span class="helper-text mb-3">Assinale a frequência de cada sintoma e, se desejar, adicione detalhes na
+                    coluna de observação (ex: "Sempre após o almoço").</span>
+
                 <div class="overflow-x-auto avoid-page-break">
                     <table>
                         <thead>
@@ -441,10 +528,12 @@
                                 <td><input type="text" name="obs_diarreia" placeholder="Detalhes (opcional)"></td>
                             </tr>
                             <tr>
-                                <td>Obstipação (prisão de ventre) Menos de 3 evac./semana, esforço, fezes ressecadas.</td>
+                                <td>Obstipação (prisão de ventre) Menos de 3 evac./semana, esforço, fezes ressecadas.
+                                </td>
                                 <td class="text-center"><input type="radio" name="clin_obstipacao" value="sim"></td>
                                 <td class="text-center"><input type="radio" name="clin_obstipacao" value="nao"></td>
-                                <td class="text-center"><input type="radio" name="clin_obstipacao" value="as_vezes"></td>
+                                <td class="text-center"><input type="radio" name="clin_obstipacao" value="as_vezes">
+                                </td>
                                 <td><input type="text" name="obs_obstipacao" placeholder="Detalhes (opcional)"></td>
                             </tr>
                             <tr>
@@ -458,7 +547,8 @@
                                 <td>Flatulência (excesso de gases.)</td>
                                 <td class="text-center"><input type="radio" name="clin_flatulencia" value="sim"></td>
                                 <td class="text-center"><input type="radio" name="clin_flatulencia" value="nao"></td>
-                                <td class="text-center"><input type="radio" name="clin_flatulencia" value="as_vezes"></td>
+                                <td class="text-center"><input type="radio" name="clin_flatulencia" value="as_vezes">
+                                </td>
                                 <td><input type="text" name="obs_flatulencia" placeholder="Detalhes (opcional)"></td>
                             </tr>
                             <tr>
@@ -486,7 +576,8 @@
                                 <td>Falta de apetite</td>
                                 <td class="text-center"><input type="radio" name="clin_falta_apetite" value="sim"></td>
                                 <td class="text-center"><input type="radio" name="clin_falta_apetite" value="nao"></td>
-                                <td class="text-center"><input type="radio" name="clin_falta_apetite" value="as_vezes"></td>
+                                <td class="text-center"><input type="radio" name="clin_falta_apetite" value="as_vezes">
+                                </td>
                                 <td><input type="text" name="obs_falta_apetite" placeholder="Em qual período?"></td>
                             </tr>
                         </tbody>
@@ -496,13 +587,16 @@
                 <div class="grid grid-cols-1 gap-6 mt-8 avoid-page-break">
                     <div>
                         <label>Possui lesões ou problemas na pele, cabelo, unha?</label>
-                        <span class="helper-text mb-1">Ex: Queda de cabelo frequente, unhas fracas e quebradiças, acne persistente.</span>
+                        <span class="helper-text mb-1">Ex: Queda de cabelo frequente, unhas fracas e quebradiças, acne
+                            persistente.</span>
                         <input type="text" name="lesoes_pele" placeholder="Descreva aqui se tiver">
                     </div>
 
                     <div class="bg-white border border-lilac-200 p-5 rounded-xl shadow-sm">
-                        <label class="block mb-2 text-lilac-900 text-lg font-serif">Possui algum diagnóstico médico?</label>
-                        <span class="helper-text mb-4">Selecione todas as condições que o seu médico já tenha diagnosticado.</span>
+                        <label class="block mb-2 text-lilac-900 text-lg font-serif">Possui algum diagnóstico
+                            médico?</label>
+                        <span class="helper-text mb-4">Selecione todas as condições que o seu médico já tenha
+                            diagnosticado.</span>
                         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                             <label><input type="checkbox" name="diag_nenhuma"> Nenhuma</label>
                             <label><input type="checkbox" name="diag_hipertensao"> Hipertensão</label>
@@ -515,13 +609,16 @@
                         </div>
                         <div class="mt-4 flex items-center gap-2 border-t border-dashed border-lilac-100 pt-3">
                             <label>Outras:</label>
-                            <input type="text" name="diag_outras" class="flex-1" placeholder="Ex: Endometriose, SOP, etc.">
+                            <input type="text" name="diag_outras" class="flex-1"
+                                placeholder="Ex: Endometriose, SOP, etc.">
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 p-5 bg-gradient-to-r from-softblue-50 to-white rounded-xl border border-softblue-100 shadow-sm">
+                    <div
+                        class="grid grid-cols-1 md:grid-cols-3 gap-6 p-5 bg-gradient-to-r from-softblue-50 to-white rounded-xl border border-softblue-100 shadow-sm">
                         <div>
-                            <label class="block mb-3 font-serif text-lg">Já passou por algum procedimento cirúrgico?</label>
+                            <label class="block mb-3 font-serif text-lg">Já passou por algum procedimento
+                                cirúrgico?</label>
                             <div class="flex gap-6">
                                 <label><input type="radio" name="cirurgia" value="sim"> Sim</label>
                                 <label><input type="radio" name="cirurgia" value="nao"> Não</label>
@@ -529,7 +626,8 @@
                         </div>
                         <div>
                             <label>Qual:</label>
-                            <input type="text" name="cirurgia_qual" placeholder="Ex: Retirada da vesícula, Bariátrica...">
+                            <input type="text" name="cirurgia_qual"
+                                placeholder="Ex: Retirada da vesícula, Bariátrica...">
                         </div>
                         <div>
                             <label>Quando:</label>
@@ -537,7 +635,8 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-4 p-5 border border-lilac-200 rounded-xl bg-white shadow-sm">
+                    <div
+                        class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-4 p-5 border border-lilac-200 rounded-xl bg-white shadow-sm">
                         <!-- Intestino -->
                         <div class="space-y-5">
                             <div>
@@ -545,16 +644,22 @@
                                 <div class="flex flex-wrap gap-4">
                                     <label><input type="radio" name="intestino_habito" value="diario"> Diário</label>
                                     <label><input type="radio" name="intestino_habito" value="ate_3"> Até 3 dias</label>
-                                    <label><input type="radio" name="intestino_habito" value="mais_3"> Mais de 3 dias</label>
-                                    <label class="flex items-center gap-1 w-full mt-2"><input type="radio" name="intestino_habito" value="outro"> Outro: <input type="text" name="intestino_outro" class="w-full" placeholder="Ex: 2x ao dia"></label>
+                                    <label><input type="radio" name="intestino_habito" value="mais_3"> Mais de 3
+                                        dias</label>
+                                    <label class="flex items-center gap-1 w-full mt-2"><input type="radio"
+                                            name="intestino_habito" value="outro"> Outro: <input type="text"
+                                            name="intestino_outro" class="w-full" placeholder="Ex: 2x ao dia"></label>
                                 </div>
                             </div>
                             <div class="border-t border-dashed border-lilac-100 pt-3">
                                 <label class="block mb-2 text-lg font-serif text-lilac-800">Consistência:</label>
                                 <div class="flex flex-wrap gap-5">
-                                    <label><input type="radio" name="intestino_consistencia" value="normal"> Normal</label>
-                                    <label><input type="radio" name="intestino_consistencia" value="amolecidas"> Amolecidas</label>
-                                    <label><input type="radio" name="intestino_consistencia" value="duras"> Duras</label>
+                                    <label><input type="radio" name="intestino_consistencia" value="normal">
+                                        Normal</label>
+                                    <label><input type="radio" name="intestino_consistencia" value="amolecidas">
+                                        Amolecidas</label>
+                                    <label><input type="radio" name="intestino_consistencia" value="duras">
+                                        Duras</label>
                                 </div>
                             </div>
                         </div>
@@ -563,7 +668,8 @@
                         <div class="space-y-5">
                             <div>
                                 <label class="block mb-1 text-lg font-serif text-lilac-800">Frequência urinária:</label>
-                                <span class="helper-text mb-2">Considera-se normal ir ao banheiro de 4 a 7 vezes por dia.</span>
+                                <span class="helper-text mb-2">Considera-se normal ir ao banheiro de 4 a 7 vezes por
+                                    dia.</span>
                                 <div class="flex flex-wrap gap-5">
                                     <label><input type="radio" name="urina_freq" value="normal"> Normal</label>
                                     <label><input type="radio" name="urina_freq" value="aumentada"> Aumentada</label>
@@ -573,7 +679,8 @@
                             <div class="border-t border-dashed border-lilac-100 pt-3">
                                 <label class="block mb-2 text-lg font-serif text-lilac-800">Cor da urina:</label>
                                 <div class="grid grid-cols-2 gap-3 text-sm">
-                                    <label><input type="radio" name="urina_cor" value="transparente"> Transparente</label>
+                                    <label><input type="radio" name="urina_cor" value="transparente">
+                                        Transparente</label>
                                     <label><input type="radio" name="urina_cor" value="claro"> Amarelo claro</label>
                                     <label><input type="radio" name="urina_cor" value="medio"> Amarelo médio</label>
                                     <label><input type="radio" name="urina_cor" value="escuro"> Amarelo escuro</label>
@@ -583,7 +690,8 @@
                     </div>
 
                     <!-- Sono -->
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-2 p-5 bg-lilac-50 rounded-xl border border-lilac-100">
+                    <div
+                        class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-2 p-5 bg-lilac-50 rounded-xl border border-lilac-100">
                         <div>
                             <label>Sono (horas/dia):</label>
                             <input type="number" name="sono_horas" placeholder="Ex: 7">
@@ -610,20 +718,32 @@
             <!-- SEC 4: EXAMES, MEDICAMENTOS E CICLO -->
             <div class="avoid-page-break mt-10">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    
+
                     <!-- Exames -->
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-lilac-200 relative">
                         <div class="absolute top-0 left-0 w-1 h-full bg-softblue-300 rounded-l-xl"></div>
-                        <h4 class="font-serif text-xl text-lilac-900 mb-2 border-b border-lilac-100 pb-2">Exames recentes</h4>
-                        <span class="helper-text mb-4">Preencha caso tenha os valores dos seus últimos exames em mãos.</span>
+                        <h4 class="font-serif text-xl text-lilac-900 mb-2 border-b border-lilac-100 pb-2">Exames
+                            recentes</h4>
+                        <span class="helper-text mb-4">Preencha caso tenha os valores dos seus últimos exames em
+                            mãos.</span>
                         <div class="space-y-3">
-                            <div class="flex items-center gap-3"><label class="w-2/5 font-medium">• Glicemia:</label><input type="text" name="exame_glicemia" placeholder="Valor"></div>
-                            <div class="flex items-center gap-3"><label class="w-2/5 font-medium">• Hemoglobina glicada:</label><input type="text" name="exame_hemo" placeholder="Valor"></div>
-                            <div class="flex items-center gap-3"><label class="w-2/5 font-medium">• Colesterol total:</label><input type="text" name="exame_colesterol" placeholder="Valor"></div>
-                            <div class="flex items-center gap-3"><label class="w-2/5 font-medium">• Triglicerídeos:</label><input type="text" name="exame_trigli" placeholder="Valor"></div>
-                            <div class="flex items-center gap-3"><label class="w-2/5 font-medium">• TSH/T4L:</label><input type="text" name="exame_tsh" placeholder="Valor"></div>
-                            <div class="flex items-center gap-3"><label class="w-2/5 font-medium">• Vitaminas:</label><input type="text" name="exame_vitaminas" placeholder="Ex: Vit D 30, B12 400"></div>
-                            <div class="flex items-center gap-3"><label class="w-2/5 font-medium">• Outros:</label><input type="text" name="exame_outros" placeholder="Especifique"></div>
+                            <div class="flex items-center gap-3"><label class="w-2/5 font-medium">•
+                                    Glicemia:</label><input type="text" name="exame_glicemia" placeholder="Valor"></div>
+                            <div class="flex items-center gap-3"><label class="w-2/5 font-medium">• Hemoglobina
+                                    glicada:</label><input type="text" name="exame_hemo" placeholder="Valor"></div>
+                            <div class="flex items-center gap-3"><label class="w-2/5 font-medium">• Colesterol
+                                    total:</label><input type="text" name="exame_colesterol" placeholder="Valor"></div>
+                            <div class="flex items-center gap-3"><label class="w-2/5 font-medium">•
+                                    Triglicerídeos:</label><input type="text" name="exame_trigli" placeholder="Valor">
+                            </div>
+                            <div class="flex items-center gap-3"><label class="w-2/5 font-medium">•
+                                    TSH/T4L:</label><input type="text" name="exame_tsh" placeholder="Valor"></div>
+                            <div class="flex items-center gap-3"><label class="w-2/5 font-medium">•
+                                    Vitaminas:</label><input type="text" name="exame_vitaminas"
+                                    placeholder="Ex: Vit D 30, B12 400"></div>
+                            <div class="flex items-center gap-3"><label class="w-2/5 font-medium">•
+                                    Outros:</label><input type="text" name="exame_outros" placeholder="Especifique">
+                            </div>
                         </div>
                     </div>
 
@@ -631,19 +751,25 @@
                         <!-- Medicamentos -->
                         <div class="bg-white p-5 rounded-xl shadow-sm border border-lilac-100">
                             <label class="block mb-1 font-serif text-xl text-lilac-900">Medicamentos em uso</label>
-                            <span class="helper-text mb-3">Informe nome, dose e motivo (ex: Losartana 50mg - Pressão Alta).</span>
-                            <textarea name="medicamentos" rows="3" class="w-full rounded border-lilac-200 resize-none" placeholder="Digite aqui..."></textarea>
+                            <span class="helper-text mb-3">Informe nome, dose e motivo (ex: Losartana 50mg - Pressão
+                                Alta).</span>
+                            <textarea name="medicamentos" rows="3" class="w-full rounded border-lilac-200 resize-none"
+                                placeholder="Digite aqui..."></textarea>
                         </div>
                         <div class="bg-white p-5 rounded-xl shadow-sm border border-lilac-100">
                             <label class="block mb-1 font-serif text-xl text-lilac-900">Suplemento em uso</label>
                             <span class="helper-text mb-3">Ex: Whey protein pós-treino, Ômega 3 após almoço.</span>
-                            <textarea name="suplementos" rows="2" class="w-full rounded border-lilac-200 resize-none" placeholder="Digite aqui..."></textarea>
+                            <textarea name="suplementos" rows="2" class="w-full rounded border-lilac-200 resize-none"
+                                placeholder="Digite aqui..."></textarea>
                         </div>
 
                         <!-- Ciclo Menstrual -->
-                        <div class="bg-gradient-to-br from-pink-50 to-white p-5 rounded-xl border border-pink-200 shadow-sm relative overflow-hidden">
+                        <div
+                            class="bg-gradient-to-br from-pink-50 to-white p-5 rounded-xl border border-pink-200 shadow-sm relative overflow-hidden">
                             <div class="absolute top-0 right-0 w-8 h-8 bg-pink-100 rounded-bl-full opacity-50"></div>
-                            <h4 class="font-serif text-xl text-pink-800 mb-4">Ciclo menstrual <span class="text-sm font-sans font-normal italic text-pink-600">(se aplicável)</span></h4>
+                            <h4 class="font-serif text-xl text-pink-800 mb-4">Ciclo menstrual <span
+                                    class="text-sm font-sans font-normal italic text-pink-600">(se aplicável)</span>
+                            </h4>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
                                     <label class="block mb-2">Ciclo regular?</label>
@@ -656,18 +782,21 @@
                                     <label>Data da última menstruação:</label>
                                     <input type="date" name="data_menstruacao">
                                 </div>
-                                <div class="sm:col-span-2 flex flex-wrap gap-3 items-center mt-2 border-t border-pink-100 pt-3">
+                                <div
+                                    class="sm:col-span-2 flex flex-wrap gap-3 items-center mt-2 border-t border-pink-100 pt-3">
                                     <label>Uso de anticoncepcional?</label>
                                     <label><input type="radio" name="anticoncepcional" value="sim"> Sim</label>
                                     <label><input type="radio" name="anticoncepcional" value="nao"> Não</label>
                                     <div class="flex-1 min-w-[150px] flex items-center gap-2">
                                         <span>Qual?</span>
-                                        <input type="text" name="anticoncepcional_qual" placeholder="Nome da pílula/método">
+                                        <input type="text" name="anticoncepcional_qual"
+                                            placeholder="Nome da pílula/método">
                                     </div>
                                 </div>
                                 <div class="sm:col-span-2 mt-2">
                                     <label>TPM intensa?</label>
-                                    <span class="helper-text mb-1">Sente muita vontade de doces, irritabilidade, cólicas?</span>
+                                    <span class="helper-text mb-1">Sente muita vontade de doces, irritabilidade,
+                                        cólicas?</span>
                                     <input type="text" name="tpm" placeholder="Descreva seus sintomas de TPM">
                                 </div>
                             </div>
@@ -680,65 +809,89 @@
             <!-- SEC 5: ATIVIDADE FÍSICA E COMPORTAMENTO -->
             <div class="mt-10 avoid-page-break">
                 <h3 class="section-title">Atividade Física e Comportamento</h3>
-                
+
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <!-- Atividade Física -->
                     <div class="bg-white p-6 rounded-xl border border-softblue-200 shadow-sm relative">
                         <div class="absolute top-0 left-0 w-1 h-full bg-softblue-400 rounded-l-xl"></div>
                         <div class="mb-5 border-b border-softblue-100 pb-3">
-                            <label class="block mb-2 font-serif text-lg text-softblue-900">Pratica atividade física?</label>
+                            <label class="block mb-2 font-serif text-lg text-softblue-900">Pratica atividade
+                                física?</label>
                             <div class="flex gap-6">
                                 <label><input type="radio" name="ativ_fisica" value="sim"> Sim</label>
                                 <label><input type="radio" name="ativ_fisica" value="nao"> Não</label>
                             </div>
                         </div>
                         <div class="space-y-4">
-                            <div class="flex items-center gap-2"><label class="w-1/3">Qual:</label><input type="text" name="ativ_qual" placeholder="Ex: Musculação, Corrida"></div>
-                            <div class="flex items-center gap-2"><label class="w-1/3">Frequência semanal:</label><input type="text" name="ativ_freq" placeholder="Ex: 3 vezes por semana"></div>
-                            <div class="flex items-center gap-2"><label class="w-1/3">Duração média:</label><input type="text" name="ativ_duracao" placeholder="Ex: 45 a 60 minutos"></div>
-                            <div class="flex items-center gap-2"><label class="w-1/3">Treina em jejum ou alimentado:</label><input type="text" name="ativ_estado" placeholder="Ex: Sempre alimentado"></div>
-                            <div class="flex items-center gap-2"><label class="w-1/3">Alimento antes/depois:</label><input type="text" name="ativ_alimento" placeholder="Ex: Banana antes, almoço depois"></div>
+                            <div class="flex items-center gap-2"><label class="w-1/3">Qual:</label><input type="text"
+                                    name="ativ_qual" placeholder="Ex: Musculação, Corrida"></div>
+                            <div class="flex items-center gap-2"><label class="w-1/3">Frequência semanal:</label><input
+                                    type="text" name="ativ_freq" placeholder="Ex: 3 vezes por semana"></div>
+                            <div class="flex items-center gap-2"><label class="w-1/3">Duração média:</label><input
+                                    type="text" name="ativ_duracao" placeholder="Ex: 45 a 60 minutos"></div>
+                            <div class="flex items-center gap-2"><label class="w-1/3">Treina em jejum ou
+                                    alimentado:</label><input type="text" name="ativ_estado"
+                                    placeholder="Ex: Sempre alimentado"></div>
+                            <div class="flex items-center gap-2"><label class="w-1/3">Alimento
+                                    antes/depois:</label><input type="text" name="ativ_alimento"
+                                    placeholder="Ex: Banana antes, almoço depois"></div>
                         </div>
                     </div>
 
                     <!-- Comportamento Alimentar -->
                     <div class="bg-white p-6 rounded-xl border border-lilac-200 shadow-sm">
-                        <h4 class="font-serif text-xl text-lilac-900 border-b border-lilac-100 pb-2 mb-4">Comportamento Alimentar</h4>
-                        
+                        <h4 class="font-serif text-xl text-lilac-900 border-b border-lilac-100 pb-2 mb-4">Comportamento
+                            Alimentar</h4>
+
                         <div class="space-y-4">
                             <div class="flex justify-between items-center pb-2">
                                 <label>Belisca entre as refeições?</label>
-                                <div class="flex gap-4"><label><input type="radio" name="comp_belisca" value="sim"> Sim</label><label><input type="radio" name="comp_belisca" value="nao"> Não</label></div>
+                                <div class="flex gap-4"><label><input type="radio" name="comp_belisca" value="sim">
+                                        Sim</label><label><input type="radio" name="comp_belisca" value="nao">
+                                        Não</label></div>
                             </div>
                             <div class="flex justify-between items-center pb-2">
-                                <label class="max-w-[65%]">Come por emoção (estresse, ansiedade, tristeza, tédio)?</label>
-                                <div class="flex gap-4"><label><input type="radio" name="comp_emocao" value="sim"> Sim</label><label><input type="radio" name="comp_emocao" value="nao"> Não</label></div>
+                                <label class="max-w-[65%]">Come por emoção (estresse, ansiedade, tristeza,
+                                    tédio)?</label>
+                                <div class="flex gap-4"><label><input type="radio" name="comp_emocao" value="sim">
+                                        Sim</label><label><input type="radio" name="comp_emocao" value="nao">
+                                        Não</label></div>
                             </div>
                             <div class="flex justify-between items-center pb-2">
                                 <label>Sente fome frequente ou exagerada?</label>
-                                <div class="flex gap-4"><label><input type="radio" name="comp_fome_exag" value="sim"> Sim</label><label><input type="radio" name="comp_fome_exag" value="nao"> Não</label></div>
+                                <div class="flex gap-4"><label><input type="radio" name="comp_fome_exag" value="sim">
+                                        Sim</label><label><input type="radio" name="comp_fome_exag" value="nao">
+                                        Não</label></div>
                             </div>
                             <div class="flex justify-between items-center pb-2">
                                 <label>Come usando celular, TV, notebook?</label>
-                                <div class="flex gap-4"><label><input type="radio" name="comp_telas" value="sim"> Sim</label><label><input type="radio" name="comp_telas" value="nao"> Não</label></div>
+                                <div class="flex gap-4"><label><input type="radio" name="comp_telas" value="sim">
+                                        Sim</label><label><input type="radio" name="comp_telas" value="nao"> Não</label>
+                                </div>
                             </div>
                             <div class="flex justify-between items-center pb-2">
                                 <label>Consegue identificar a saciedade?</label>
-                                <div class="flex gap-4"><label><input type="radio" name="comp_saciedade" value="sim"> Sim</label><label><input type="radio" name="comp_saciedade" value="nao"> Não</label></div>
+                                <div class="flex gap-4"><label><input type="radio" name="comp_saciedade" value="sim">
+                                        Sim</label><label><input type="radio" name="comp_saciedade" value="nao">
+                                        Não</label></div>
                             </div>
-                            
+
                             <div class="bg-lilac-50 p-4 rounded-lg mt-2">
                                 <label class="block mb-1">Velocidade ao comer:</label>
-                                <span class="helper-text mb-3">Preste atenção no tempo que leva para esvaziar o prato.</span>
+                                <span class="helper-text mb-3">Preste atenção no tempo que leva para esvaziar o
+                                    prato.</span>
                                 <div class="flex flex-wrap gap-5">
-                                    <label><input type="radio" name="comp_velocidade" value="rapido"> Come rápido</label>
-                                    <label><input type="radio" name="comp_velocidade" value="devagar"> Come devagar</label>
+                                    <label><input type="radio" name="comp_velocidade" value="rapido"> Come
+                                        rápido</label>
+                                    <label><input type="radio" name="comp_velocidade" value="devagar"> Come
+                                        devagar</label>
                                     <label><input type="radio" name="comp_velocidade" value="normal"> Normal</label>
                                 </div>
                             </div>
                             <div class="mt-4 flex items-center gap-3">
                                 <label>Qual horário sente mais fome:</label>
-                                <input type="text" name="comp_horario_fome" class="flex-1" placeholder="Ex: Final da tarde, antes de dormir">
+                                <input type="text" name="comp_horario_fome" class="flex-1"
+                                    placeholder="Ex: Final da tarde, antes de dormir">
                             </div>
                         </div>
                     </div>
@@ -748,28 +901,32 @@
             <!-- SEC 6: HISTÓRICO ALIMENTAR -->
             <div class="avoid-page-break mt-10">
                 <h3 class="section-title">Histórico Alimentar</h3>
-                
+
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div class="bg-white p-5 rounded-xl border border-red-100 shadow-sm relative overflow-hidden">
                         <div class="absolute top-0 right-0 w-12 h-12 bg-red-50 rounded-bl-full"></div>
                         <label class="block mb-1 font-serif text-lg text-red-800">Intolerância alimentar?</label>
-                        <span class="helper-text mb-3">Dificuldade digestiva (ex: gases, estufamento) com lactose, glúten, etc.</span>
+                        <span class="helper-text mb-3">Dificuldade digestiva (ex: gases, estufamento) com lactose,
+                            glúten, etc.</span>
                         <div class="flex gap-4 items-center mb-3">
                             <label><input type="radio" name="hist_intolerancia" value="sim"> Sim</label>
                             <label><input type="radio" name="hist_intolerancia" value="nao"> Não</label>
                         </div>
-                        <div class="flex items-center gap-2"><label>Qual:</label><input type="text" name="hist_intolerancia_qual" class="flex-1" placeholder="Ex: Leite e derivados"></div>
+                        <div class="flex items-center gap-2"><label>Qual:</label><input type="text"
+                                name="hist_intolerancia_qual" class="flex-1" placeholder="Ex: Leite e derivados"></div>
                     </div>
 
                     <div class="bg-white p-5 rounded-xl border border-red-100 shadow-sm relative overflow-hidden">
                         <div class="absolute top-0 right-0 w-12 h-12 bg-red-50 rounded-bl-full"></div>
                         <label class="block mb-1 font-serif text-lg text-red-800">Alergia alimentar?</label>
-                        <span class="helper-text mb-3">Reação imunológica (ex: coceira, vermelhidão, inchaço) a amendoim, camarão, etc.</span>
+                        <span class="helper-text mb-3">Reação imunológica (ex: coceira, vermelhidão, inchaço) a
+                            amendoim, camarão, etc.</span>
                         <div class="flex gap-4 items-center mb-3">
                             <label><input type="radio" name="hist_alergia" value="sim"> Sim</label>
                             <label><input type="radio" name="hist_alergia" value="nao"> Não</label>
                         </div>
-                        <div class="flex items-center gap-2"><label>Qual:</label><input type="text" name="hist_alergia_qual" class="flex-1" placeholder="Ex: Frutos do mar"></div>
+                        <div class="flex items-center gap-2"><label>Qual:</label><input type="text"
+                                name="hist_alergia_qual" class="flex-1" placeholder="Ex: Frutos do mar"></div>
                     </div>
 
                     <div class="md:col-span-2">
@@ -777,7 +934,8 @@
                         <input type="text" name="hist_preferencias" placeholder="Ex: Massas, doces, churrasco...">
                     </div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 md:col-span-2 bg-gradient-to-r from-lilac-50 to-softblue-50 p-6 rounded-xl border border-lilac-200 shadow-sm">
+                    <div
+                        class="grid grid-cols-1 sm:grid-cols-2 gap-6 md:col-span-2 bg-gradient-to-r from-lilac-50 to-softblue-50 p-6 rounded-xl border border-lilac-200 shadow-sm">
                         <div>
                             <label class="block mb-2 font-serif text-lg">Já fez dietas antes?</label>
                             <div class="flex gap-4">
@@ -799,7 +957,8 @@
                         </div>
                         <div class="sm:col-span-2 border-t border-lilac-200 pt-4">
                             <label>Faz uso de adoçantes, açúcar ou mel?</label>
-                            <span class="helper-text mb-2">Especifique qual tipo (ex: Açúcar mascavo, Adoçante Stevia) e quantidade.</span>
+                            <span class="helper-text mb-2">Especifique qual tipo (ex: Açúcar mascavo, Adoçante Stevia) e
+                                quantidade.</span>
                             <input type="text" name="hist_adocantes" placeholder="Digite aqui sua resposta">
                         </div>
                     </div>
@@ -809,119 +968,241 @@
             <!-- SEC 7: RECORDATÓRIO 24H -->
             <div class="mt-10">
                 <h3 class="section-title">Recordatório Alimentar 24 horas</h3>
-                <span class="helper-text mb-6">Descreva detalhadamente o que comeu e bebeu num dia típico recente. Não se esqueça de colocar as quantidades aproximadas (ex: 2 colheres de sopa, 1 escumadeira, 1 copo de 200ml).</span>
-                
+                <span class="helper-text mb-6">Descreva detalhadamente o que comeu e bebeu num dia típico recente. Não
+                    se esqueça de colocar as quantidades aproximadas (ex: 2 colheres de sopa, 1 escumadeira, 1 copo de
+                    200ml).</span>
+
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    
+
                     <!-- Café da Manhã -->
-                    <div class="avoid-page-break bg-white p-5 border border-lilac-200 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                    <div
+                        class="avoid-page-break bg-white p-5 border border-lilac-200 rounded-xl shadow-sm hover:shadow-md transition-shadow">
                         <div class="flex justify-between items-center mb-3 border-b border-lilac-100 pb-3">
-                            <h4 class="font-serif font-bold text-lilac-800 text-xl flex items-center gap-2">☀️ Café da manhã</h4>
+                            <h4 class="font-serif font-bold text-lilac-800 text-xl flex items-center gap-2">☀️ Café da
+                                manhã</h4>
                             <div class="flex gap-4 text-sm">
-                                <div class="flex items-center gap-1"><label>Hora:</label><input type="time" name="rec_cafe_hora" class="w-24 p-0 border-none bg-gray-50 rounded px-1"></div>
-                                <div class="flex items-center gap-1"><label>Local:</label><input type="text" name="rec_cafe_local" class="w-24 p-0 border-none border-b" placeholder="Casa"></div>
+                                <div class="flex items-center gap-1"><label>Hora:</label><input type="time"
+                                        name="rec_cafe_hora" class="w-24 p-0 border-none bg-gray-50 rounded px-1"></div>
+                                <div class="flex items-center gap-1"><label>Local:</label><input type="text"
+                                        name="rec_cafe_local" class="w-24 p-0 border-none border-b" placeholder="Casa">
+                                </div>
                             </div>
                         </div>
                         <table>
-                            <thead><tr><th>Alimentos e bebidas</th><th class="w-5/12">Qtd (medida caseira)</th></tr></thead>
+                            <thead>
+                                <tr>
+                                    <th>Alimentos e bebidas</th>
+                                    <th class="w-5/12">Qtd (medida caseira)</th>
+                                </tr>
+                            </thead>
                             <tbody>
-                                <tr><td><input type="text" name="rec_cafe_alim1" placeholder="Ex: Pão francês"></td><td><input type="text" name="rec_cafe_qtd1" placeholder="1 unidade"></td></tr>
-                                <tr><td><input type="text" name="rec_cafe_alim2" placeholder="Ex: Café com leite"></td><td><input type="text" name="rec_cafe_qtd2" placeholder="1 xícara (200ml)"></td></tr>
-                                <tr><td><input type="text" name="rec_cafe_alim3"></td><td><input type="text" name="rec_cafe_qtd3"></td></tr>
+                                <tr>
+                                    <td><input type="text" name="rec_cafe_alim1" placeholder="Ex: Pão francês"></td>
+                                    <td><input type="text" name="rec_cafe_qtd1" placeholder="1 unidade"></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" name="rec_cafe_alim2" placeholder="Ex: Café com leite"></td>
+                                    <td><input type="text" name="rec_cafe_qtd2" placeholder="1 xícara (200ml)"></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" name="rec_cafe_alim3"></td>
+                                    <td><input type="text" name="rec_cafe_qtd3"></td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
 
                     <!-- Lanche da Manhã -->
-                    <div class="avoid-page-break bg-white p-5 border border-lilac-200 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                    <div
+                        class="avoid-page-break bg-white p-5 border border-lilac-200 rounded-xl shadow-sm hover:shadow-md transition-shadow">
                         <div class="flex justify-between items-center mb-3 border-b border-lilac-100 pb-3">
-                            <h4 class="font-serif font-bold text-lilac-800 text-xl flex items-center gap-2">🍎 Lanche da manhã</h4>
+                            <h4 class="font-serif font-bold text-lilac-800 text-xl flex items-center gap-2">🍎 Lanche da
+                                manhã</h4>
                             <div class="flex gap-4 text-sm">
-                                <div class="flex items-center gap-1"><label>Hora:</label><input type="time" name="rec_lanche_m_hora" class="w-24 p-0 border-none bg-gray-50 rounded px-1"></div>
-                                <div class="flex items-center gap-1"><label>Local:</label><input type="text" name="rec_lanche_m_local" class="w-24 p-0 border-none border-b" placeholder="Trabalho"></div>
+                                <div class="flex items-center gap-1"><label>Hora:</label><input type="time"
+                                        name="rec_lanche_m_hora" class="w-24 p-0 border-none bg-gray-50 rounded px-1">
+                                </div>
+                                <div class="flex items-center gap-1"><label>Local:</label><input type="text"
+                                        name="rec_lanche_m_local" class="w-24 p-0 border-none border-b"
+                                        placeholder="Trabalho"></div>
                             </div>
                         </div>
                         <table>
-                            <thead><tr><th>Alimentos e bebidas</th><th class="w-5/12">Qtd (medida caseira)</th></tr></thead>
+                            <thead>
+                                <tr>
+                                    <th>Alimentos e bebidas</th>
+                                    <th class="w-5/12">Qtd (medida caseira)</th>
+                                </tr>
+                            </thead>
                             <tbody>
-                                <tr><td><input type="text" name="rec_lanchem_alim1" placeholder="Ex: Maçã"></td><td><input type="text" name="rec_lanchem_qtd1" placeholder="1 unidade média"></td></tr>
-                                <tr><td><input type="text" name="rec_lanchem_alim2"></td><td><input type="text" name="rec_lanchem_qtd2"></td></tr>
+                                <tr>
+                                    <td><input type="text" name="rec_lanchem_alim1" placeholder="Ex: Maçã"></td>
+                                    <td><input type="text" name="rec_lanchem_qtd1" placeholder="1 unidade média"></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" name="rec_lanchem_alim2"></td>
+                                    <td><input type="text" name="rec_lanchem_qtd2"></td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
 
                     <!-- Almoço -->
-                    <div class="avoid-page-break bg-white p-5 border border-lilac-200 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                    <div
+                        class="avoid-page-break bg-white p-5 border border-lilac-200 rounded-xl shadow-sm hover:shadow-md transition-shadow">
                         <div class="flex justify-between items-center mb-3 border-b border-lilac-100 pb-3">
-                            <h4 class="font-serif font-bold text-lilac-800 text-xl flex items-center gap-2">🍲 Almoço</h4>
+                            <h4 class="font-serif font-bold text-lilac-800 text-xl flex items-center gap-2">🍲 Almoço
+                            </h4>
                             <div class="flex gap-4 text-sm">
-                                <div class="flex items-center gap-1"><label>Hora:</label><input type="time" name="rec_almoco_hora" class="w-24 p-0 border-none bg-gray-50 rounded px-1"></div>
-                                <div class="flex items-center gap-1"><label>Local:</label><input type="text" name="rec_almoco_local" class="w-24 p-0 border-none border-b" placeholder="Restaurante"></div>
+                                <div class="flex items-center gap-1"><label>Hora:</label><input type="time"
+                                        name="rec_almoco_hora" class="w-24 p-0 border-none bg-gray-50 rounded px-1">
+                                </div>
+                                <div class="flex items-center gap-1"><label>Local:</label><input type="text"
+                                        name="rec_almoco_local" class="w-24 p-0 border-none border-b"
+                                        placeholder="Restaurante"></div>
                             </div>
                         </div>
                         <table>
-                            <thead><tr><th>Alimentos e bebidas</th><th class="w-5/12">Qtd (medida caseira)</th></tr></thead>
+                            <thead>
+                                <tr>
+                                    <th>Alimentos e bebidas</th>
+                                    <th class="w-5/12">Qtd (medida caseira)</th>
+                                </tr>
+                            </thead>
                             <tbody>
-                                <tr><td><input type="text" name="rec_almoco_alim1" placeholder="Ex: Arroz branco"></td><td><input type="text" name="rec_almoco_qtd1" placeholder="2 colheres de servir"></td></tr>
-                                <tr><td><input type="text" name="rec_almoco_alim2" placeholder="Ex: Feijão carioca"></td><td><input type="text" name="rec_almoco_qtd2" placeholder="1 concha"></td></tr>
-                                <tr><td><input type="text" name="rec_almoco_alim3" placeholder="Ex: Filé de frango grelhado"></td><td><input type="text" name="rec_almoco_qtd3" placeholder="1 filé médio"></td></tr>
-                                <tr><td><input type="text" name="rec_almoco_alim4" placeholder="Ex: Salada de alface"></td><td><input type="text" name="rec_almoco_qtd4" placeholder="À vontade"></td></tr>
+                                <tr>
+                                    <td><input type="text" name="rec_almoco_alim1" placeholder="Ex: Arroz branco"></td>
+                                    <td><input type="text" name="rec_almoco_qtd1" placeholder="2 colheres de servir">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" name="rec_almoco_alim2" placeholder="Ex: Feijão carioca">
+                                    </td>
+                                    <td><input type="text" name="rec_almoco_qtd2" placeholder="1 concha"></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" name="rec_almoco_alim3"
+                                            placeholder="Ex: Filé de frango grelhado"></td>
+                                    <td><input type="text" name="rec_almoco_qtd3" placeholder="1 filé médio"></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" name="rec_almoco_alim4" placeholder="Ex: Salada de alface">
+                                    </td>
+                                    <td><input type="text" name="rec_almoco_qtd4" placeholder="À vontade"></td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
 
                     <!-- Lanche da Tarde -->
-                    <div class="avoid-page-break bg-white p-5 border border-lilac-200 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                    <div
+                        class="avoid-page-break bg-white p-5 border border-lilac-200 rounded-xl shadow-sm hover:shadow-md transition-shadow">
                         <div class="flex justify-between items-center mb-3 border-b border-lilac-100 pb-3">
-                            <h4 class="font-serif font-bold text-lilac-800 text-xl flex items-center gap-2">☕ Lanche da tarde</h4>
+                            <h4 class="font-serif font-bold text-lilac-800 text-xl flex items-center gap-2">☕ Lanche da
+                                tarde</h4>
                             <div class="flex gap-4 text-sm">
-                                <div class="flex items-center gap-1"><label>Hora:</label><input type="time" name="rec_lanche_t_hora" class="w-24 p-0 border-none bg-gray-50 rounded px-1"></div>
-                                <div class="flex items-center gap-1"><label>Local:</label><input type="text" name="rec_lanche_t_local" class="w-24 p-0 border-none border-b" placeholder=""></div>
+                                <div class="flex items-center gap-1"><label>Hora:</label><input type="time"
+                                        name="rec_lanche_t_hora" class="w-24 p-0 border-none bg-gray-50 rounded px-1">
+                                </div>
+                                <div class="flex items-center gap-1"><label>Local:</label><input type="text"
+                                        name="rec_lanche_t_local" class="w-24 p-0 border-none border-b" placeholder="">
+                                </div>
                             </div>
                         </div>
                         <table>
-                            <thead><tr><th>Alimentos e bebidas</th><th class="w-5/12">Qtd (medida caseira)</th></tr></thead>
+                            <thead>
+                                <tr>
+                                    <th>Alimentos e bebidas</th>
+                                    <th class="w-5/12">Qtd (medida caseira)</th>
+                                </tr>
+                            </thead>
                             <tbody>
-                                <tr><td><input type="text" name="rec_lanchet_alim1" placeholder="Ex: Iogurte natural"></td><td><input type="text" name="rec_lanchet_qtd1" placeholder="1 pote (170g)"></td></tr>
-                                <tr><td><input type="text" name="rec_lanchet_alim2"></td><td><input type="text" name="rec_lanchet_qtd2"></td></tr>
-                                <tr><td><input type="text" name="rec_lanchet_alim3"></td><td><input type="text" name="rec_lanchet_qtd3"></td></tr>
+                                <tr>
+                                    <td><input type="text" name="rec_lanchet_alim1" placeholder="Ex: Iogurte natural">
+                                    </td>
+                                    <td><input type="text" name="rec_lanchet_qtd1" placeholder="1 pote (170g)"></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" name="rec_lanchet_alim2"></td>
+                                    <td><input type="text" name="rec_lanchet_qtd2"></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" name="rec_lanchet_alim3"></td>
+                                    <td><input type="text" name="rec_lanchet_qtd3"></td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
 
                     <!-- Jantar -->
-                    <div class="avoid-page-break bg-white p-5 border border-lilac-200 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                    <div
+                        class="avoid-page-break bg-white p-5 border border-lilac-200 rounded-xl shadow-sm hover:shadow-md transition-shadow">
                         <div class="flex justify-between items-center mb-3 border-b border-lilac-100 pb-3">
-                            <h4 class="font-serif font-bold text-lilac-800 text-xl flex items-center gap-2">🌙 Jantar</h4>
+                            <h4 class="font-serif font-bold text-lilac-800 text-xl flex items-center gap-2">🌙 Jantar
+                            </h4>
                             <div class="flex gap-4 text-sm">
-                                <div class="flex items-center gap-1"><label>Hora:</label><input type="time" name="rec_jantar_hora" class="w-24 p-0 border-none bg-gray-50 rounded px-1"></div>
-                                <div class="flex items-center gap-1"><label>Local:</label><input type="text" name="rec_jantar_local" class="w-24 p-0 border-none border-b" placeholder="Casa"></div>
+                                <div class="flex items-center gap-1"><label>Hora:</label><input type="time"
+                                        name="rec_jantar_hora" class="w-24 p-0 border-none bg-gray-50 rounded px-1">
+                                </div>
+                                <div class="flex items-center gap-1"><label>Local:</label><input type="text"
+                                        name="rec_jantar_local" class="w-24 p-0 border-none border-b"
+                                        placeholder="Casa"></div>
                             </div>
                         </div>
                         <table>
-                            <thead><tr><th>Alimentos e bebidas</th><th class="w-5/12">Qtd (medida caseira)</th></tr></thead>
+                            <thead>
+                                <tr>
+                                    <th>Alimentos e bebidas</th>
+                                    <th class="w-5/12">Qtd (medida caseira)</th>
+                                </tr>
+                            </thead>
                             <tbody>
-                                <tr><td><input type="text" name="rec_jantar_alim1" placeholder="Ex: Sopa de legumes"></td><td><input type="text" name="rec_jantar_qtd1" placeholder="2 conchas cheias"></td></tr>
-                                <tr><td><input type="text" name="rec_jantar_alim2"></td><td><input type="text" name="rec_jantar_qtd2"></td></tr>
-                                <tr><td><input type="text" name="rec_jantar_alim3"></td><td><input type="text" name="rec_jantar_qtd3"></td></tr>
+                                <tr>
+                                    <td><input type="text" name="rec_jantar_alim1" placeholder="Ex: Sopa de legumes">
+                                    </td>
+                                    <td><input type="text" name="rec_jantar_qtd1" placeholder="2 conchas cheias"></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" name="rec_jantar_alim2"></td>
+                                    <td><input type="text" name="rec_jantar_qtd2"></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" name="rec_jantar_alim3"></td>
+                                    <td><input type="text" name="rec_jantar_qtd3"></td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
 
                     <!-- Ceia -->
-                    <div class="avoid-page-break bg-white p-5 border border-lilac-200 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                    <div
+                        class="avoid-page-break bg-white p-5 border border-lilac-200 rounded-xl shadow-sm hover:shadow-md transition-shadow">
                         <div class="flex justify-between items-center mb-3 border-b border-lilac-100 pb-3">
                             <h4 class="font-serif font-bold text-lilac-800 text-xl flex items-center gap-2">🍵 Ceia</h4>
                             <div class="flex gap-4 text-sm">
-                                <div class="flex items-center gap-1"><label>Hora:</label><input type="time" name="rec_ceia_hora" class="w-24 p-0 border-none bg-gray-50 rounded px-1"></div>
-                                <div class="flex items-center gap-1"><label>Local:</label><input type="text" name="rec_ceia_local" class="w-24 p-0 border-none border-b" placeholder=""></div>
+                                <div class="flex items-center gap-1"><label>Hora:</label><input type="time"
+                                        name="rec_ceia_hora" class="w-24 p-0 border-none bg-gray-50 rounded px-1"></div>
+                                <div class="flex items-center gap-1"><label>Local:</label><input type="text"
+                                        name="rec_ceia_local" class="w-24 p-0 border-none border-b" placeholder="">
+                                </div>
                             </div>
                         </div>
                         <table>
-                            <thead><tr><th>Alimentos e bebidas</th><th class="w-5/12">Qtd (medida caseira)</th></tr></thead>
+                            <thead>
+                                <tr>
+                                    <th>Alimentos e bebidas</th>
+                                    <th class="w-5/12">Qtd (medida caseira)</th>
+                                </tr>
+                            </thead>
                             <tbody>
-                                <tr><td><input type="text" name="rec_ceia_alim1" placeholder="Ex: Chá de camomila"></td><td><input type="text" name="rec_ceia_qtd1" placeholder="1 xícara"></td></tr>
-                                <tr><td><input type="text" name="rec_ceia_alim2"></td><td><input type="text" name="rec_ceia_qtd2"></td></tr>
+                                <tr>
+                                    <td><input type="text" name="rec_ceia_alim1" placeholder="Ex: Chá de camomila"></td>
+                                    <td><input type="text" name="rec_ceia_qtd1" placeholder="1 xícara"></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" name="rec_ceia_alim2"></td>
+                                    <td><input type="text" name="rec_ceia_qtd2"></td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -933,18 +1214,26 @@
             <div class="mt-10">
                 <h3 class="section-title">Frequência Alimentar</h3>
                 <span class="helper-text mb-4 bg-lilac-50 p-3 rounded text-lilac-800 border border-lilac-100">
-                    <strong>Como preencher:</strong> Para cada alimento, preencha apenas a coluna que melhor representa o seu consumo. <br>
-                    Exemplo: Se come Arroz todos os dias, no almoço e jantar, escreva "2x" na coluna Diário e deixe o resto em branco. Se come Pizza a cada duas semanas, escreva "2x" na coluna Mensal.
+                    <strong>Como preencher:</strong> Para cada alimento, preencha apenas a coluna que melhor representa
+                    o seu consumo. <br>
+                    Exemplo: Se come Arroz todos os dias, no almoço e jantar, escreva "2x" na coluna Diário e deixe o
+                    resto em branco. Se come Pizza a cada duas semanas, escreva "2x" na coluna Mensal.
                 </span>
-                
+
                 <div class="overflow-x-auto shadow-sm rounded-xl border border-lilac-200">
                     <table id="freq-table" class="!mt-0 !mb-0 !border-0 rounded-none">
                         <thead>
                             <tr class="bg-gradient-to-r from-lilac-100 to-softblue-100">
                                 <th class="w-1/4">Alimentos</th>
-                                <th class="text-center font-bold text-lilac-900 text-xs uppercase tracking-wider">Consumo diário <br><span class="text-lilac-600 lowercase font-normal">(Quantas vezes ao dia)</span></th>
-                                <th class="text-center font-bold text-lilac-900 text-xs uppercase tracking-wider">Consumo Semanal <br><span class="text-lilac-600 lowercase font-normal">(Quantas vezes na semana)</span></th>
-                                <th class="text-center font-bold text-lilac-900 text-xs uppercase tracking-wider">Consumo Mensal <br><span class="text-lilac-600 lowercase font-normal">(Quantas vezes no mês)</span></th>
+                                <th class="text-center font-bold text-lilac-900 text-xs uppercase tracking-wider">
+                                    Consumo diário <br><span class="text-lilac-600 lowercase font-normal">(Quantas vezes
+                                        ao dia)</span></th>
+                                <th class="text-center font-bold text-lilac-900 text-xs uppercase tracking-wider">
+                                    Consumo Semanal <br><span class="text-lilac-600 lowercase font-normal">(Quantas
+                                        vezes na semana)</span></th>
+                                <th class="text-center font-bold text-lilac-900 text-xs uppercase tracking-wider">
+                                    Consumo Mensal <br><span class="text-lilac-600 lowercase font-normal">(Quantas vezes
+                                        no mês)</span></th>
                             </tr>
                         </thead>
                         <tbody id="freq-body" class="bg-white">
@@ -955,7 +1244,8 @@
 
                 <div class="mt-8 avoid-page-break p-6 bg-white border border-dashed border-lilac-300 rounded-xl">
                     <h4 class="font-serif text-xl text-lilac-800 mb-2">Alimentos que consome e não estão na lista:</h4>
-                    <span class="helper-text mb-3">Esquecemos de algo? Adicione abaixo os seus alimentos preferidos que ficaram de fora.</span>
+                    <span class="helper-text mb-3">Esquecemos de algo? Adicione abaixo os seus alimentos preferidos que
+                        ficaram de fora.</span>
                     <table class="!mt-0">
                         <thead>
                             <tr>
@@ -968,15 +1258,21 @@
                         <tbody>
                             <tr>
                                 <td><input type="text" name="freq_extra_alim1" placeholder="Nome do alimento"></td>
-                                <td class="text-center"><input type="text" name="freq_extra_diario1" class="text-center" placeholder="Ex: 1x"></td>
-                                <td class="text-center"><input type="text" name="freq_extra_sem1" class="text-center" placeholder="Ex: 3x"></td>
-                                <td class="text-center"><input type="text" name="freq_extra_mes1" class="text-center" placeholder="-"></td>
+                                <td class="text-center"><input type="text" name="freq_extra_diario1" class="text-center"
+                                        placeholder="Ex: 1x"></td>
+                                <td class="text-center"><input type="text" name="freq_extra_sem1" class="text-center"
+                                        placeholder="Ex: 3x"></td>
+                                <td class="text-center"><input type="text" name="freq_extra_mes1" class="text-center"
+                                        placeholder="-"></td>
                             </tr>
                             <tr>
                                 <td><input type="text" name="freq_extra_alim2" placeholder="Nome do alimento"></td>
-                                <td class="text-center"><input type="text" name="freq_extra_diario2" class="text-center" placeholder="-"></td>
-                                <td class="text-center"><input type="text" name="freq_extra_sem2" class="text-center" placeholder="-"></td>
-                                <td class="text-center"><input type="text" name="freq_extra_mes2" class="text-center" placeholder="-"></td>
+                                <td class="text-center"><input type="text" name="freq_extra_diario2" class="text-center"
+                                        placeholder="-"></td>
+                                <td class="text-center"><input type="text" name="freq_extra_sem2" class="text-center"
+                                        placeholder="-"></td>
+                                <td class="text-center"><input type="text" name="freq_extra_mes2" class="text-center"
+                                        placeholder="-"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -986,8 +1282,9 @@
             <!-- SEC 9: DADOS ANTROPOMÉTRICOS -->
             <div class="avoid-page-break mt-10">
                 <h3 class="section-title">Dados Antropométricos</h3>
-                <span class="helper-text mb-6">Preencha apenas o que souber. Se não souber suas medidas com fita métrica, não se preocupe, deixe em branco.</span>
-                
+                <span class="helper-text mb-6">Preencha apenas o que souber. Se não souber suas medidas com fita
+                    métrica, não se preocupe, deixe em branco.</span>
+
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-6">
                     <!-- Gerais -->
                     <div class="space-y-4">
@@ -1008,29 +1305,50 @@
                     </div>
 
                     <!-- Circunferências -->
-                    <div class="space-y-3 bg-gradient-to-b from-softblue-50 to-white p-5 rounded-xl border border-softblue-100 shadow-sm">
-                        <h4 class="font-serif text-xl font-bold text-softblue-800 mb-3 border-b border-softblue-200 pb-2">Circunferências <span class="text-sm font-sans font-normal">(cm)</span></h4>
-                        <div class="flex justify-between items-center"><label>Cintura:</label><input type="text" name="circ_cintura" class="w-20 text-center" placeholder="-"></div>
-                        <div class="flex justify-between items-center"><label>Quadril:</label><input type="text" name="circ_quadril" class="w-20 text-center" placeholder="-"></div>
-                        <div class="flex justify-between items-center"><label>Abdominal:</label><input type="text" name="circ_abdominal" class="w-20 text-center" placeholder="-"></div>
-                        <div class="flex justify-between items-center"><label>Tórax:</label><input type="text" name="circ_torax" class="w-20 text-center" placeholder="-"></div>
-                        <div class="flex justify-between items-center"><label>Braço:</label><input type="text" name="circ_braco" class="w-20 text-center" placeholder="-"></div>
-                        <div class="flex justify-between items-center"><label>Braço contraído:</label><input type="text" name="circ_braco_contr" class="w-20 text-center" placeholder="-"></div>
-                        <div class="flex justify-between items-center"><label>Panturrilha:</label><input type="text" name="circ_panturrilha" class="w-20 text-center" placeholder="-"></div>
+                    <div
+                        class="space-y-3 bg-gradient-to-b from-softblue-50 to-white p-5 rounded-xl border border-softblue-100 shadow-sm">
+                        <h4
+                            class="font-serif text-xl font-bold text-softblue-800 mb-3 border-b border-softblue-200 pb-2">
+                            Circunferências <span class="text-sm font-sans font-normal">(cm)</span></h4>
+                        <div class="flex justify-between items-center"><label>Cintura:</label><input type="text"
+                                name="circ_cintura" class="w-20 text-center" placeholder="-"></div>
+                        <div class="flex justify-between items-center"><label>Quadril:</label><input type="text"
+                                name="circ_quadril" class="w-20 text-center" placeholder="-"></div>
+                        <div class="flex justify-between items-center"><label>Abdominal:</label><input type="text"
+                                name="circ_abdominal" class="w-20 text-center" placeholder="-"></div>
+                        <div class="flex justify-between items-center"><label>Tórax:</label><input type="text"
+                                name="circ_torax" class="w-20 text-center" placeholder="-"></div>
+                        <div class="flex justify-between items-center"><label>Braço:</label><input type="text"
+                                name="circ_braco" class="w-20 text-center" placeholder="-"></div>
+                        <div class="flex justify-between items-center"><label>Braço contraído:</label><input type="text"
+                                name="circ_braco_contr" class="w-20 text-center" placeholder="-"></div>
+                        <div class="flex justify-between items-center"><label>Panturrilha:</label><input type="text"
+                                name="circ_panturrilha" class="w-20 text-center" placeholder="-"></div>
                     </div>
 
                     <!-- Dobras Cutâneas -->
-                    <div class="space-y-3 bg-gradient-to-b from-lilac-50 to-white p-5 rounded-xl border border-lilac-100 shadow-sm">
-                        <h4 class="font-serif text-xl font-bold text-lilac-800 mb-3 border-b border-lilac-200 pb-2">Dobras cutâneas <span class="text-sm font-sans font-normal">(mm)</span></h4>
-                        <div class="flex justify-between items-center"><label>Tríceps:</label><input type="text" name="dobra_triceps" class="w-20 text-center" placeholder="-"></div>
-                        <div class="flex justify-between items-center"><label>Bíceps:</label><input type="text" name="dobra_biceps" class="w-20 text-center" placeholder="-"></div>
-                        <div class="flex justify-between items-center"><label>Subescapular:</label><input type="text" name="dobra_subescapular" class="w-20 text-center" placeholder="-"></div>
-                        <div class="flex justify-between items-center"><label>Peitoral:</label><input type="text" name="dobra_peitoral" class="w-20 text-center" placeholder="-"></div>
-                        <div class="flex justify-between items-center"><label>Axilar média:</label><input type="text" name="dobra_axilar" class="w-20 text-center" placeholder="-"></div>
-                        <div class="flex justify-between items-center"><label>Supra-ilíaca:</label><input type="text" name="dobra_supra" class="w-20 text-center" placeholder="-"></div>
-                        <div class="flex justify-between items-center"><label>Abdominal:</label><input type="text" name="dobra_abdominal" class="w-20 text-center" placeholder="-"></div>
-                        <div class="flex justify-between items-center"><label>Coxa:</label><input type="text" name="dobra_coxa" class="w-20 text-center" placeholder="-"></div>
-                        <div class="flex justify-between items-center"><label>Panturrilha:</label><input type="text" name="dobra_panturrilha" class="w-20 text-center" placeholder="-"></div>
+                    <div
+                        class="space-y-3 bg-gradient-to-b from-lilac-50 to-white p-5 rounded-xl border border-lilac-100 shadow-sm">
+                        <h4 class="font-serif text-xl font-bold text-lilac-800 mb-3 border-b border-lilac-200 pb-2">
+                            Dobras cutâneas <span class="text-sm font-sans font-normal">(mm)</span></h4>
+                        <div class="flex justify-between items-center"><label>Tríceps:</label><input type="text"
+                                name="dobra_triceps" class="w-20 text-center" placeholder="-"></div>
+                        <div class="flex justify-between items-center"><label>Bíceps:</label><input type="text"
+                                name="dobra_biceps" class="w-20 text-center" placeholder="-"></div>
+                        <div class="flex justify-between items-center"><label>Subescapular:</label><input type="text"
+                                name="dobra_subescapular" class="w-20 text-center" placeholder="-"></div>
+                        <div class="flex justify-between items-center"><label>Peitoral:</label><input type="text"
+                                name="dobra_peitoral" class="w-20 text-center" placeholder="-"></div>
+                        <div class="flex justify-between items-center"><label>Axilar média:</label><input type="text"
+                                name="dobra_axilar" class="w-20 text-center" placeholder="-"></div>
+                        <div class="flex justify-between items-center"><label>Supra-ilíaca:</label><input type="text"
+                                name="dobra_supra" class="w-20 text-center" placeholder="-"></div>
+                        <div class="flex justify-between items-center"><label>Abdominal:</label><input type="text"
+                                name="dobra_abdominal" class="w-20 text-center" placeholder="-"></div>
+                        <div class="flex justify-between items-center"><label>Coxa:</label><input type="text"
+                                name="dobra_coxa" class="w-20 text-center" placeholder="-"></div>
+                        <div class="flex justify-between items-center"><label>Panturrilha:</label><input type="text"
+                                name="dobra_panturrilha" class="w-20 text-center" placeholder="-"></div>
                     </div>
                 </div>
             </div>
@@ -1038,16 +1356,27 @@
             <!-- SEC 10: INFORMAÇÕES ADICIONAIS -->
             <div class="avoid-page-break mt-10 mb-10">
                 <h3 class="section-title">Informações Adicionais</h3>
-                <span class="helper-text mb-3">Sinta-se à vontade para escrever qualquer coisa que julgue importante e que não foi perguntado anteriormente.</span>
-                <textarea name="info_adicional" rows="6" class="w-full rounded-xl border border-lilac-300 bg-white p-4 shadow-sm resize-none focus:ring-2 focus:ring-lilac-400 focus:border-lilac-400" placeholder="Escreva aqui suas observações finais..."></textarea>
+                <span class="helper-text mb-3">Sinta-se à vontade para escrever qualquer coisa que julgue importante e
+                    que não foi perguntado anteriormente.</span>
+                <textarea name="info_adicional" rows="6"
+                    class="w-full rounded-xl border border-lilac-300 bg-white p-4 shadow-sm resize-none focus:ring-2 focus:ring-lilac-400 focus:border-lilac-400"
+                    placeholder="Escreva aqui suas observações finais..."></textarea>
             </div>
 
             <!-- Botão Gigante de Finalizar no fim do formulário -->
-            <div class="no-print w-full flex flex-col items-center justify-center mt-12 mb-4 p-8 bg-lilac-50 rounded-2xl border-2 border-dashed border-lilac-300">
+            <div
+                class="no-print w-full flex flex-col items-center justify-center mt-12 mb-4 p-8 bg-lilac-50 rounded-2xl border-2 border-dashed border-lilac-300">
                 <h2 class="text-2xl font-serif text-lilac-900 mb-2">Tudo pronto?</h2>
-                <p class="text-lilac-600 mb-6 text-center">Reveja suas respostas e clique abaixo para gerar a sua ficha de anamnese completa em formato PDF.</p>
-                <button type="button" onclick="generatePDF()" class="btn-gerar text-white font-bold py-4 px-10 rounded-full flex items-center gap-3 text-xl w-full md:w-auto justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+                <p class="text-lilac-600 mb-6 text-center">Reveja suas respostas e clique abaixo para gerar a sua ficha
+                    de anamnese completa em formato PDF.</p>
+                <button type="button" onclick="generatePDF()"
+                    class="btn-gerar text-white font-bold py-4 px-10 rounded-full flex items-center gap-3 text-xl w-full md:w-auto justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                        <polyline points="7 10 12 15 17 10" />
+                        <line x1="12" x2="12" y1="15" y2="3" />
+                    </svg>
                     Gerar Documento PDF
                 </button>
             </div>
@@ -1060,11 +1389,11 @@
         // Dados para a Tabela de Frequência Alimentar
         const alimentosFreq = [
             "Arroz", "Macarrão", "Batata/Mandioca", "Pão de queijo", "Pão", "Farinhas",
-            "Hortaliças cruas", "Hortaliças cozidas", "Frutas", "Leite (tipo)", 
-            "Queijo/iogurtes", "Carne vermelha", "Carne branca", "Embutidos", 
-            "Enlatados", "Ovos", "Feijão", "Margarina/manteiga", "Requeijão", 
+            "Hortaliças cruas", "Hortaliças cozidas", "Frutas", "Leite (tipo)",
+            "Queijo/iogurtes", "Carne vermelha", "Carne branca", "Embutidos",
+            "Enlatados", "Ovos", "Feijão", "Margarina/manteiga", "Requeijão",
             "Maionese", "Frituras", "Açúcar/Adoçante", "Doces", "Bolacha recheada",
-            "Chocolate", "Refrigerante", "Refrigerante zero", "Suco (qual)", 
+            "Chocolate", "Refrigerante", "Refrigerante zero", "Suco (qual)",
             "Sorvete", "Pizza", "Lanche", "Café", "Chá"
         ];
 
@@ -1084,7 +1413,7 @@
         // Função para preparar os inputs antes de gerar o PDF
         function prepareForPDF() {
             const inputs = document.querySelectorAll('#anamnese-form input, #anamnese-form textarea, #anamnese-form select');
-            
+
             inputs.forEach(input => {
                 if (input.type === 'checkbox' || input.type === 'radio') {
                     if (input.checked) {
@@ -1105,38 +1434,47 @@
             const btns = document.querySelectorAll('.btn-gerar');
             const element = document.getElementById('pdf-content');
 
-            // Feedback visual nos botões
             btns.forEach(btn => {
-                btn.classList.add('opacity-75', 'cursor-wait');
-                btn.innerHTML = `<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Gerando PDF...`;
+                btn.disabled = true;
+                btn.innerText = "Gerando PDF...";
             });
 
-            // Prepara os valores no DOM
             prepareForPDF();
 
-            // Configuração do html2pdf
             const opt = {
-                margin:       [10, 10, 10, 10], // Margens
-                filename:     'Ficha_de_Anamnese_Milene_Santos.pdf',
-                image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2, useCORS: true, logging: false },
-                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
-                pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
+                margin: 10,
+                filename: 'Ficha_de_Anamnese_Milene_Santos.pdf',
+                image: { type: 'jpeg', quality: 0.95 },
+                html2canvas: {
+                    scale: 1, // 🔥 MUITO IMPORTANTE (era 2)
+                    useCORS: true
+                },
+                jsPDF: {
+                    unit: 'mm',
+                    format: 'a4',
+                    orientation: 'portrait'
+                },
+                pagebreak: {
+                    mode: ['css'] // 🔥 remove avoid-all
+                }
             };
 
-            // Gera e salva o PDF
-            html2pdf().set(opt).from(element).save().then(() => {
-                // Restaura os botões (recarrega a página para o estado inicial ou altera apenas o texto)
-                setTimeout(() => {
-                    alert("O seu PDF foi gerado e o download começou com sucesso!");
-                    window.location.reload(); // Recarrega para limpar o botão
-                }, 1000);
-            }).catch(err => {
-                console.error("Erro ao gerar PDF:", err);
-                alert("Ocorreu um erro ao gerar o PDF. Tente novamente.");
-                window.location.reload();
-            });
+            html2pdf()
+                .set(opt)
+                .from(element)
+                .save()
+                .then(() => {
+                    btns.forEach(btn => {
+                        btn.disabled = false;
+                        btn.innerText = "Gerar Documento PDF";
+                    });
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert("Erro ao gerar PDF.");
+                });
         }
     </script>
 </body>
+
 </html>
