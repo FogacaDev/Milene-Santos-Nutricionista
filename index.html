@@ -216,13 +216,21 @@
         /* Container Principal do Documento */
         #pdf-content {
             background-color: white;
-            padding: 3rem 4rem;
+            padding: 2rem 1rem;
+            /* Mobile first */
             box-shadow: 0 20px 40px -10px rgba(139, 92, 246, 0.08);
             max-width: 950px;
-            margin: 2rem auto 8rem auto;
-            /* Extra margin bottom para o botão */
+            margin: 1rem auto 6rem auto;
             border-radius: 12px;
             border: 1px solid #f5f3ff;
+        }
+
+        @media (min-width: 768px) {
+            #pdf-content {
+                padding: 3rem 4rem;
+                /* Desktop */
+                margin: 2rem auto 8rem auto;
+            }
         }
 
         @media print {
@@ -275,39 +283,19 @@
             box-shadow: 0 20px 30px -5px rgba(139, 92, 246, 0.6);
         }
 
-        .floating-container {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            z-index: 50;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 0.5rem;
+    
+        .overflow-x-auto::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .overflow-x-auto::-webkit-scrollbar-thumb {
+            background: #c4b5fd;
+            border-radius: 10px;
         }
     </style>
 </head>
 
 <body class="antialiased font-sans">
-
-    <!-- Container do Botão Flutuante Intuitivo -->
-    <div class="no-print floating-container">
-        <div
-            class="bg-white px-4 py-2 rounded-lg shadow-md border border-lilac-100 text-sm text-lilac-800 font-medium animate-pulse-slow">
-            ✨ Já preencheu tudo?
-        </div>
-        <button onclick="generatePDF()"
-            class="btn-gerar text-white font-semibold py-4 px-8 rounded-full flex items-center gap-3 text-lg border-2 border-white">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                <polyline points="14 2 14 8 20 8" />
-                <line x1="12" y1="18" x2="12" y2="12" />
-                <polyline points="9 15 12 18 15 15" />
-            </svg>
-            <span id="btn-text">Baixar Ficha em PDF</span>
-        </button>
-    </div>
 
     <div id="pdf-content">
 
@@ -488,7 +476,7 @@
                     coluna de observação (ex: "Sempre após o almoço").</span>
 
                 <div class="overflow-x-auto avoid-page-break">
-                    <table>
+                    <table class="min-w-[500px]">
                         <thead>
                             <tr>
                                 <th class="w-2/5">Sintoma / Condição</th>
@@ -995,7 +983,7 @@
                                 </div>
                             </div>
                         </div>
-                        <table>
+                        <table class="min-w-[500px]">
                             <thead>
                                 <tr>
                                     <th>Alimentos e bebidas</th>
@@ -1034,7 +1022,7 @@
                                         placeholder="Trabalho"></div>
                             </div>
                         </div>
-                        <table>
+                        <table class="min-w-[500px]">
                             <thead>
                                 <tr>
                                     <th>Alimentos e bebidas</th>
@@ -1069,7 +1057,7 @@
                                         placeholder="Restaurante"></div>
                             </div>
                         </div>
-                        <table>
+                        <table class="min-w-[500px]">
                             <thead>
                                 <tr>
                                     <th>Alimentos e bebidas</th>
@@ -1116,7 +1104,7 @@
                                 </div>
                             </div>
                         </div>
-                        <table>
+                        <table class="min-w-[500px]">
                             <thead>
                                 <tr>
                                     <th>Alimentos e bebidas</th>
@@ -1156,7 +1144,7 @@
                                         placeholder="Casa"></div>
                             </div>
                         </div>
-                        <table>
+                        <table class="min-w-[500px]">
                             <thead>
                                 <tr>
                                     <th>Alimentos e bebidas</th>
@@ -1194,7 +1182,7 @@
                                 </div>
                             </div>
                         </div>
-                        <table>
+                        <table class="min-w-[500px]">
                             <thead>
                                 <tr>
                                     <th>Alimentos e bebidas</th>
@@ -1228,7 +1216,7 @@
                 </span>
 
                 <div class="overflow-x-auto shadow-sm rounded-xl border border-lilac-200">
-                    <table id="freq-table" class="!mt-0 !mb-0 !border-0 rounded-none">
+                    <table id="freq-table" class="min-w-[800px] !mt-0 !mb-0 !border-0 rounded-none">
                         <thead>
                             <tr class="bg-gradient-to-r from-lilac-100 to-softblue-100">
                                 <th class="w-1/4">Alimentos</th>
@@ -1254,7 +1242,7 @@
                     <span class="helper-text mb-3">Esquecemos de algo? Adicione abaixo os seus alimentos preferidos que
                         ficaram de fora.</span>
                     <div class="overflow-x-auto">
-                        <table class="!mt-0 min-w-[700px]">
+                        <table class="!mt-0 min-w-[800px]">
                             <thead>
                                 <tr>
                                     <th class="w-1/4">Alimentos extras</th>
@@ -1376,51 +1364,52 @@
                             name="dobra_panturrilha" class="w-20 text-center" placeholder="-"></div>
                 </div>
             </div>
-    </div>
 
-    <!-- SEC 10: INFORMAÇÕES ADICIONAIS -->
-    <div class="avoid-page-break mt-14 mb-14 flex justify-center">
 
-        <div
-            class="w-full max-w-3xl bg-white p-8 rounded-2xl border border-lilac-200 shadow-sm relative overflow-hidden">
+            <!-- SEC 10: INFORMAÇÕES ADICIONAIS -->
+            <div class="avoid-page-break mt-14 mb-14 flex justify-center">
 
-            <!-- detalhe lateral elegante -->
-            <div class="absolute top-0 left-0 w-1.5 h-full bg-gradient-to-b from-lilac-400 to-softblue-400"></div>
+                <div
+                    class="w-full max-w-3xl bg-white p-8 rounded-2xl border border-lilac-200 shadow-sm relative overflow-hidden">
 
-            <h3 class="section-title !mt-0">Informações Adicionais</h3>
+                    <!-- detalhe lateral elegante -->
+                    <div class="absolute top-0 left-0 w-1.5 h-full bg-gradient-to-b from-lilac-400 to-softblue-400">
+                    </div>
 
-            <span class="helper-text mb-4 block">
-                Sinta-se à vontade para escrever qualquer coisa que julgue importante
-                e que não foi perguntado anteriormente.
-            </span>
+                    <h3 class="section-title !mt-0">Informações Adicionais</h3>
 
-            <textarea name="info_adicional" rows="6" class="w-full rounded-xl border border-lilac-300 bg-lilac-50/40 p-5 shadow-inner resize-none 
+                    <span class="helper-text mb-4 block">
+                        Sinta-se à vontade para escrever qualquer coisa que julgue importante
+                        e que não foi perguntado anteriormente.
+                    </span>
+
+                    <textarea name="info_adicional" rows="6" class="w-full rounded-xl border border-lilac-300 bg-lilac-50/40 p-5 shadow-inner resize-none 
                    focus:ring-2 focus:ring-lilac-400 focus:border-lilac-400 transition-all"
-                placeholder="Escreva aqui suas observações finais..."></textarea>
+                        placeholder="Escreva aqui suas observações finais..."></textarea>
 
-        </div>
+                </div>
 
-    </div>
+            </div>
 
-    <!-- Botão Gigante de Finalizar no fim do formulário -->
-    <div
-        class="no-print w-full flex flex-col items-center justify-center mt-12 mb-4 p-8 bg-lilac-50 rounded-2xl border-2 border-dashed border-lilac-300">
-        <h2 class="text-2xl font-serif text-lilac-900 mb-2">Tudo pronto?</h2>
-        <p class="text-lilac-600 mb-6 text-center">Reveja suas respostas e clique abaixo para gerar a sua ficha
-            de anamnese completa em formato PDF.</p>
-        <button type="button" onclick="generatePDF()"
-            class="btn-gerar text-white font-bold py-4 px-10 rounded-full flex items-center gap-3 text-xl w-full md:w-auto justify-center">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                <polyline points="7 10 12 15 17 10" />
-                <line x1="12" x2="12" y1="15" y2="3" />
-            </svg>
-            Gerar Documento PDF
-        </button>
-    </div>
+            <!-- Botão Gigante de Finalizar no fim do formulário -->
+            <div
+                class="no-print w-full flex flex-col items-center justify-center mt-12 mb-4 p-8 bg-lilac-50 rounded-2xl border-2 border-dashed border-lilac-300">
+                <h2 class="text-2xl font-serif text-lilac-900 mb-2">Tudo pronto?</h2>
+                <p class="text-lilac-600 mb-6 text-center">Reveja suas respostas e clique abaixo para gerar a sua ficha
+                    de anamnese completa em formato PDF.</p>
+                <button id="btn-gerar-final" type="button" onclick="generatePDF()"
+                    class="btn-gerar text-white font-bold py-4 px-10 rounded-full flex items-center gap-3 text-xl w-full md:w-auto justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                        <polyline points="7 10 12 15 17 10" />
+                        <line x1="12" x2="12" y1="15" y2="3" />
+                    </svg>
+                    Gerar Documento PDF
+                </button>
+            </div>
 
-    </form>
+        </form>
     </div>
 
     <!-- Scripts -->
@@ -1478,10 +1467,9 @@
             const { PDFDocument, StandardFonts, rgb } = PDFLib;
 
             // Feedback visual de carregamento
-            const btn = document.querySelector('.btn-gerar');
-            const btnText = document.getElementById('btn-text');
+            const btn = document.getElementById('btn-gerar-final');
             if (btn) btn.disabled = true;
-            if (btnText) btnText.innerText = "Gerando PDF...";
+
 
             try {
                 const pdfDoc = await PDFDocument.create();
@@ -1818,7 +1806,7 @@
                 alert("Ocorreu um erro ao gerar o documento. Verifique o console.");
             } finally {
                 if (btn) btn.disabled = false;
-                if (btnText) btnText.innerText = "Baixar Ficha em PDF";
+
             }
         }
     </script>
