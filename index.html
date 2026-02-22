@@ -969,7 +969,6 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-                    <!-- Café da Manhã -->
                     <div
                         class="avoid-page-break bg-white p-5 border border-lilac-200 rounded-xl shadow-sm hover:shadow-md transition-shadow">
                         <div class="flex justify-between items-center mb-3 border-b border-lilac-100 pb-3">
@@ -983,31 +982,32 @@
                                 </div>
                             </div>
                         </div>
-                        <table class="min-w-[500px]">
-                            <thead>
-                                <tr>
-                                    <th>Alimentos e bebidas</th>
-                                    <th class="w-5/12">Qtd (medida caseira)</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><input type="text" name="rec_cafe_alim1" placeholder="Ex: Pão francês"></td>
-                                    <td><input type="text" name="rec_cafe_qtd1" placeholder="1 unidade"></td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text" name="rec_cafe_alim2" placeholder="Ex: Café com leite"></td>
-                                    <td><input type="text" name="rec_cafe_qtd2" placeholder="1 xícara (200ml)"></td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text" name="rec_cafe_alim3"></td>
-                                    <td><input type="text" name="rec_cafe_qtd3"></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div class="overflow-x-auto pb-2">
+                            <table class="min-w-[500px]">
+                                <thead>
+                                    <tr>
+                                        <th>Alimentos e bebidas</th>
+                                        <th class="w-5/12">Qtd (medida caseira)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><input type="text" name="rec_cafe_alim1" placeholder="Ex: Pão francês"></td>
+                                        <td><input type="text" name="rec_cafe_qtd1" placeholder="1 unidade"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" name="rec_cafe_alim2" placeholder="Ex: Café com leite"></td>
+                                        <td><input type="text" name="rec_cafe_qtd2" placeholder="1 xícara (200ml)"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" name="rec_cafe_alim3"></td>
+                                        <td><input type="text" name="rec_cafe_qtd3"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
 
-                    <!-- Lanche da Manhã -->
                     <div
                         class="avoid-page-break bg-white p-5 border border-lilac-200 rounded-xl shadow-sm hover:shadow-md transition-shadow">
                         <div class="flex justify-between items-center mb-3 border-b border-lilac-100 pb-3">
@@ -1022,27 +1022,28 @@
                                         placeholder="Trabalho"></div>
                             </div>
                         </div>
-                        <table class="min-w-[500px]">
-                            <thead>
-                                <tr>
-                                    <th>Alimentos e bebidas</th>
-                                    <th class="w-5/12">Qtd (medida caseira)</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><input type="text" name="rec_lanchem_alim1" placeholder="Ex: Maçã"></td>
-                                    <td><input type="text" name="rec_lanchem_qtd1" placeholder="1 unidade média"></td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text" name="rec_lanchem_alim2"></td>
-                                    <td><input type="text" name="rec_lanchem_qtd2"></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div class="overflow-x-auto pb-2">
+                            <table class="min-w-[500px]">
+                                <thead>
+                                    <tr>
+                                        <th>Alimentos e bebidas</th>
+                                        <th class="w-5/12">Qtd (medida caseira)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><input type="text" name="rec_lanchem_alim1" placeholder="Ex: Maçã"></td>
+                                        <td><input type="text" name="rec_lanchem_qtd1" placeholder="1 unidade média"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" name="rec_lanchem_alim2"></td>
+                                        <td><input type="text" name="rec_lanchem_qtd2"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
 
-                    <!-- Almoço -->
                     <div
                         class="avoid-page-break bg-white p-5 border border-lilac-200 rounded-xl shadow-sm hover:shadow-md transition-shadow">
                         <div class="flex justify-between items-center mb-3 border-b border-lilac-100 pb-3">
@@ -1057,39 +1058,40 @@
                                         placeholder="Restaurante"></div>
                             </div>
                         </div>
-                        <table class="min-w-[500px]">
-                            <thead>
-                                <tr>
-                                    <th>Alimentos e bebidas</th>
-                                    <th class="w-5/12">Qtd (medida caseira)</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><input type="text" name="rec_almoco_alim1" placeholder="Ex: Arroz branco"></td>
-                                    <td><input type="text" name="rec_almoco_qtd1" placeholder="2 colheres de servir">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text" name="rec_almoco_alim2" placeholder="Ex: Feijão carioca">
-                                    </td>
-                                    <td><input type="text" name="rec_almoco_qtd2" placeholder="1 concha"></td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text" name="rec_almoco_alim3"
-                                            placeholder="Ex: Filé de frango grelhado"></td>
-                                    <td><input type="text" name="rec_almoco_qtd3" placeholder="1 filé médio"></td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text" name="rec_almoco_alim4" placeholder="Ex: Salada de alface">
-                                    </td>
-                                    <td><input type="text" name="rec_almoco_qtd4" placeholder="À vontade"></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div class="overflow-x-auto pb-2">
+                            <table class="min-w-[500px]">
+                                <thead>
+                                    <tr>
+                                        <th>Alimentos e bebidas</th>
+                                        <th class="w-5/12">Qtd (medida caseira)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><input type="text" name="rec_almoco_alim1" placeholder="Ex: Arroz branco"></td>
+                                        <td><input type="text" name="rec_almoco_qtd1" placeholder="2 colheres de servir">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" name="rec_almoco_alim2" placeholder="Ex: Feijão carioca">
+                                        </td>
+                                        <td><input type="text" name="rec_almoco_qtd2" placeholder="1 concha"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" name="rec_almoco_alim3"
+                                                placeholder="Ex: Filé de frango grelhado"></td>
+                                        <td><input type="text" name="rec_almoco_qtd3" placeholder="1 filé médio"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" name="rec_almoco_alim4" placeholder="Ex: Salada de alface">
+                                        </td>
+                                        <td><input type="text" name="rec_almoco_qtd4" placeholder="À vontade"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
 
-                    <!-- Lanche da Tarde -->
                     <div
                         class="avoid-page-break bg-white p-5 border border-lilac-200 rounded-xl shadow-sm hover:shadow-md transition-shadow">
                         <div class="flex justify-between items-center mb-3 border-b border-lilac-100 pb-3">
@@ -1104,32 +1106,33 @@
                                 </div>
                             </div>
                         </div>
-                        <table class="min-w-[500px]">
-                            <thead>
-                                <tr>
-                                    <th>Alimentos e bebidas</th>
-                                    <th class="w-5/12">Qtd (medida caseira)</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><input type="text" name="rec_lanchet_alim1" placeholder="Ex: Iogurte natural">
-                                    </td>
-                                    <td><input type="text" name="rec_lanchet_qtd1" placeholder="1 pote (170g)"></td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text" name="rec_lanchet_alim2"></td>
-                                    <td><input type="text" name="rec_lanchet_qtd2"></td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text" name="rec_lanchet_alim3"></td>
-                                    <td><input type="text" name="rec_lanchet_qtd3"></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div class="overflow-x-auto pb-2">
+                            <table class="min-w-[500px]">
+                                <thead>
+                                    <tr>
+                                        <th>Alimentos e bebidas</th>
+                                        <th class="w-5/12">Qtd (medida caseira)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><input type="text" name="rec_lanchet_alim1" placeholder="Ex: Iogurte natural">
+                                        </td>
+                                        <td><input type="text" name="rec_lanchet_qtd1" placeholder="1 pote (170g)"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" name="rec_lanchet_alim2"></td>
+                                        <td><input type="text" name="rec_lanchet_qtd2"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" name="rec_lanchet_alim3"></td>
+                                        <td><input type="text" name="rec_lanchet_qtd3"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
 
-                    <!-- Jantar -->
                     <div
                         class="avoid-page-break bg-white p-5 border border-lilac-200 rounded-xl shadow-sm hover:shadow-md transition-shadow">
                         <div class="flex justify-between items-center mb-3 border-b border-lilac-100 pb-3">
@@ -1144,32 +1147,33 @@
                                         placeholder="Casa"></div>
                             </div>
                         </div>
-                        <table class="min-w-[500px]">
-                            <thead>
-                                <tr>
-                                    <th>Alimentos e bebidas</th>
-                                    <th class="w-5/12">Qtd (medida caseira)</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><input type="text" name="rec_jantar_alim1" placeholder="Ex: Sopa de legumes">
-                                    </td>
-                                    <td><input type="text" name="rec_jantar_qtd1" placeholder="2 conchas cheias"></td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text" name="rec_jantar_alim2"></td>
-                                    <td><input type="text" name="rec_jantar_qtd2"></td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text" name="rec_jantar_alim3"></td>
-                                    <td><input type="text" name="rec_jantar_qtd3"></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div class="overflow-x-auto pb-2">
+                            <table class="min-w-[500px]">
+                                <thead>
+                                    <tr>
+                                        <th>Alimentos e bebidas</th>
+                                        <th class="w-5/12">Qtd (medida caseira)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><input type="text" name="rec_jantar_alim1" placeholder="Ex: Sopa de legumes">
+                                        </td>
+                                        <td><input type="text" name="rec_jantar_qtd1" placeholder="2 conchas cheias"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" name="rec_jantar_alim2"></td>
+                                        <td><input type="text" name="rec_jantar_qtd2"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" name="rec_jantar_alim3"></td>
+                                        <td><input type="text" name="rec_jantar_qtd3"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
 
-                    <!-- Ceia -->
                     <div
                         class="avoid-page-break bg-white p-5 border border-lilac-200 rounded-xl shadow-sm hover:shadow-md transition-shadow">
                         <div class="flex justify-between items-center mb-3 border-b border-lilac-100 pb-3">
@@ -1182,24 +1186,26 @@
                                 </div>
                             </div>
                         </div>
-                        <table class="min-w-[500px]">
-                            <thead>
-                                <tr>
-                                    <th>Alimentos e bebidas</th>
-                                    <th class="w-5/12">Qtd (medida caseira)</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><input type="text" name="rec_ceia_alim1" placeholder="Ex: Chá de camomila"></td>
-                                    <td><input type="text" name="rec_ceia_qtd1" placeholder="1 xícara"></td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text" name="rec_ceia_alim2"></td>
-                                    <td><input type="text" name="rec_ceia_qtd2"></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div class="overflow-x-auto pb-2">
+                            <table class="min-w-[500px]">
+                                <thead>
+                                    <tr>
+                                        <th>Alimentos e bebidas</th>
+                                        <th class="w-5/12">Qtd (medida caseira)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><input type="text" name="rec_ceia_alim1" placeholder="Ex: Chá de camomila"></td>
+                                        <td><input type="text" name="rec_ceia_qtd1" placeholder="1 xícara"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" name="rec_ceia_alim2"></td>
+                                        <td><input type="text" name="rec_ceia_qtd2"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
 
                 </div>
